@@ -5,4 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
     UserEntity findUserByPhoneNumber(String phoneNumber);
+    UserEntity findUserByPassportNumber(String passportNumber);
 }
