@@ -12,17 +12,20 @@ import javax.persistence.*;
 @Setter
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Column(name = "passport_number")
+    private String passportNumber;
+
     @Column(name = "password")
     private String password;
 
-    public UserEntity(String phoneNumber, String password) {
+    public UserEntity(String phoneNumber, String passportNumber, String password) {
         this.phoneNumber = phoneNumber;
+        this.passportNumber = passportNumber;
         this.password = password;
     }
 }
