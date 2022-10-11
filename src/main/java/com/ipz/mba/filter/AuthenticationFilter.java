@@ -1,4 +1,4 @@
-package com.ipz.mba.jwt.filter;
+package com.ipz.mba.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ipz.mba.entities.CustomerEntity;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 
     private final AuthenticationManager authenticationManager;
 
