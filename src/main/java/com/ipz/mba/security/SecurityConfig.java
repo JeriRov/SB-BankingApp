@@ -1,2 +1,4 @@
-package com.ipz.mba.security;public class SecurityConfig {
+package com.ipz.mba.security;
+
+public class SecurityConfig {
 }
