@@ -32,7 +32,7 @@ public class JWTProvider {
     public String generateRefreshToken(UserEntity user, HttpServletRequest request){
         return JWT.create()
                 .withSubject(user.getPhoneNumber() == null ? user.getPassportNumber() : user.getPhoneNumber())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000)) //We give more time for RefreshToken than AccessToken:
+                .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000)) //We give more time for RefreshToken than AccessToken
                 .withIssuer(request.getRequestURL().toString())
                 .sign(getAlgorithm());
     }
