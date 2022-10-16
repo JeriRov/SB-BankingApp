@@ -5,6 +5,7 @@ import com.ipz.mba.entities.RoleEntity;
 import com.ipz.mba.entities.UserEntity;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Getter @Setter
@@ -29,7 +30,7 @@ public class ClientDataRegistration {
     }
 
     public static CustomerEntity getCustomerEntity(ClientDataRegistration data) {
-        return new CustomerEntity(data.getFirstName(), data.getLastName(), data.getRoles());
+        return new CustomerEntity(data.getFirstName(), data.getLastName(), new HashSet<>());
     }
 
 }
