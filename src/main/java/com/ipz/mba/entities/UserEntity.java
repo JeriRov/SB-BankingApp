@@ -17,15 +17,15 @@ public class UserEntity {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "passport_number")
-    private String passportNumber;
+    @Column(name = "ipn")
+    private String ipn;
 
     @Column(name = "password")
     private String password;
 
-    public UserEntity(String phoneNumber, String passportNumber, String password) {
+    public UserEntity(String phoneNumber, String ipn, String password) {
         this.phoneNumber = phoneNumber;
-        this.passportNumber = passportNumber;
+        this.ipn = ipn;
         this.password = password;
     }
 }
