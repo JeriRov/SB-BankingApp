@@ -27,4 +27,61 @@ import java.util.HashMap;
 @Slf4j
 public class JWTFilter extends OncePerRequestFilter {
 
+    private static final String BEARER = "Bearer";
+    private final JWTUtil jwtUtil;
+    private final CustomerDetailsService customerDetailsService;
+
+    @Autowired
+    public JWTFilter(JWTUtil jwtUtil, CustomerDetailsService customerDetailsService) {
+        this.jwtUtil = jwtUtil;
+        this.customerDetailsService = customerDetailsService;
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
+            throws ServletException, IOException {
+        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (authHeader != null && authHeader.startsWith(BEARER)) {
+            String jwtToken = authHeader.substring(BEARER.length()).trim();
+            log.info("jwt is {}", jwtToken);
+            try {
+                // here we`ll have phoneNumber or ipn
+                String data = jwtUtil.validateToken(jwtToken);
+
+                // search customer by phoneNumber at first, and then by ipn
+                UserDetails userDetailsSearchedByPhone = customerDetailsService.loadUserByUsername(data);
+                UserDetails userDetailsSearchedByIpn = customerDetailsService.loadUserByUsername(data);
+
+                // define customer
+                CustomerDetails customerDetails = (CustomerDetails) (userDetailsSearchedByPhone != null ?
+                        userDetailsSearchedByPhone : userDetailsSearchedByIpn);
+
+                var authToken = new UsernamePasswordAuthenticationToken(
+                        customerDetails,
+                        customerDetails.getPassword(),
+                        customerDetails.getAuthorities()
+                );
+
+                if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
+                filterChain.doFilter(request, response);
+
+            } catch (JWTVerificationException ex) {
+                createResponse(response, ex, jwtToken);
+            }
+        }
+        filterChain.doFilter(request, response);
+    }
+
+    private void createResponse(HttpServletResponse response, Exception ex, String jwtToken) throws IOException {
+        log.error("jwtToken JWTVerificationException");
+        log.error("jwtToken {}", jwtToken);
+        response.setHeader("error", "Invalid Json Web Token");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        var error = new HashMap<>();
+        error.put("error_message", ex.getMessage());
+        new ObjectMapper().writeValue(response.getOutputStream(), error);
+    }
 }
