@@ -24,7 +24,7 @@ public class LoginController {
     @GetMapping("/login/passport/{passport}/{password}")
     public ResponseEntity<Boolean> loginViaPassport(@PathVariable String passport, @PathVariable String password){
         System.out.println("LOG: Try to log in via passport " + passport);
-        if(password.equals(loginService.getPasswordByPassport(passport)))
+        if(password.equals(loginService.getPasswordByIpn(passport)))
             return ResponseEntity.ok(true);
         return ResponseEntity.badRequest().body(false);
     }

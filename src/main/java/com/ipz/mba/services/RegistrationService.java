@@ -1,49 +1,62 @@
 package com.ipz.mba.services;
 
 import com.ipz.mba.entities.CustomerEntity;
+import com.ipz.mba.entities.RoleEntity;
 import com.ipz.mba.entities.UserEntity;
 import com.ipz.mba.exceptions.ClientDataRegistrationHasNullFieldsException;
 import com.ipz.mba.exceptions.UserAlreadyExistsException;
 import com.ipz.mba.models.ClientDataRegistration;
 import com.ipz.mba.repositories.CustomerRepository;
+import com.ipz.mba.repositories.RoleRepository;
 import com.ipz.mba.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class RegistrationService {
     private final CustomerRepository customersRepository;
     private final UserRepository usersRepository;
+    private final RoleRepository roleRepository;
 
     @Autowired
-    public RegistrationService(CustomerRepository customersRepository, UserRepository usersRepository) {
+    public RegistrationService(CustomerRepository customersRepository, UserRepository usersRepository, RoleRepository roleRepository) {
         this.customersRepository = customersRepository;
         this.usersRepository = usersRepository;
+        this.roleRepository = roleRepository;
     }
-
-    public void saveData(ClientDataRegistration clientData) throws UserAlreadyExistsException, ClientDataRegistrationHasNullFieldsException {
+    //@Transactional
+    public void saveData(ClientDataRegistration clientData) throws Exception {
 
         // if client data contains null fields like a name, password, etc.
         if (ClientDataRegistration.hasNullFields(clientData)) {
             throw new ClientDataRegistrationHasNullFieldsException("Client-data has null fields");
         }
-        else if (clientData.getPhoneNumber() == null && clientData.getPassportNumber() == null) {
-            throw new ClientDataRegistrationHasNullFieldsException("Phone-number and passport-number are not specified.");
+        else if (clientData.getPhoneNumber() == null && clientData.getIpn() == null) {
+            throw new ClientDataRegistrationHasNullFieldsException("Phone-number and ipn are not specified.");
         }
         // if registration was by phone-number and this phone-number is present in DB
         else if (clientData.getPhoneNumber() != null &&
-                usersRepository.findUserByPhoneNumber(clientData.getPhoneNumber()) != null) {
+                usersRepository.findUserByPhoneNumber(clientData.getPhoneNumber()).isPresent()) {
             throw new UserAlreadyExistsException("User with such phone-number already exists.");
         }
         // if registration was by passport-number and passport-number is present in DB
-        else if (clientData.getPassportNumber() != null &&
-                usersRepository.findUserByPassportNumber(clientData.getPassportNumber()) != null){
-            throw new UserAlreadyExistsException("User with such passport-number already exists.");
+        else if (clientData.getIpn() != null &&
+                usersRepository.findUserByIpn(clientData.getIpn()).isPresent()){
+            throw new UserAlreadyExistsException("User with such ipn already exists.");
         }
 
         // if all is ok, just save it
         UserEntity userEntity = ClientDataRegistration.getUserEntity(clientData);
         CustomerEntity customerEntity = ClientDataRegistration.getCustomerEntity(clientData);
+
+        // add default role "user" to new customer
+        Optional<RoleEntity> roleEntity = roleRepository.findByName("ROLE_USER");
+        customerEntity.setRoles(Set.of(roleEntity.orElseThrow(() -> new Exception("Role was not found"))));
 
         customersRepository.save(customerEntity);
         userEntity.setId(customerEntity.getId());

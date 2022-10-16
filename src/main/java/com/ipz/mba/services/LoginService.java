@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LoginService {
-
     private final UserRepository usersRepository;
 
     @Autowired
@@ -15,11 +14,11 @@ public class LoginService {
     }
 
     public String getPasswordByPhone(String number){
-        return usersRepository.findUserByPhoneNumber(number).getPassword();
+        return usersRepository.findUserByPhoneNumber(number).get().getPassword();
     }
 
-    public String getPasswordByPassport(String number){
-        return usersRepository.findUserByPassportNumber(number).getPassword();
+    public String getPasswordByIpn(String ipn){
+        return usersRepository.findUserByIpn(ipn).get().getPassword();
     }
 
 }
