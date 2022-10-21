@@ -1,6 +1,9 @@
 package com.ipz.mba.entities;
 
-import lombok.*;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Setter;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.Set;
