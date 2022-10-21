@@ -10,6 +10,8 @@ import com.ipz.mba.repositories.CustomerRepository;
 import com.ipz.mba.repositories.RoleRepository;
 import com.ipz.mba.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,11 +23,14 @@ public class RegistrationService {
     private final UserRepository usersRepository;
     private final RoleRepository roleRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
     public RegistrationService(CustomerRepository customersRepository, UserRepository usersRepository, RoleRepository roleRepository) {
         this.customersRepository = customersRepository;
         this.usersRepository = usersRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     //@Transactional
@@ -47,6 +52,9 @@ public class RegistrationService {
                 usersRepository.findUserByIpn(clientData.getIpn()).isPresent()) {
             throw new UserAlreadyExistsException("User with such ipn already exists.");
         }
+
+        // password encoder
+        clientData.setPassword(passwordEncoder.encode(clientData.getPassword()));
 
         // if all is ok, just save it
         UserEntity userEntity = ClientDataRegistration.getUserEntity(clientData);
