@@ -3,6 +3,7 @@ package com.ipz.mba.controllers;
 import com.ipz.mba.models.ClientDataRegistration;
 import com.ipz.mba.security.jwt.JWTUtil;
 import com.ipz.mba.services.RegistrationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
-
+@Slf4j
 @RestController
 @RequestMapping("/register")
 public class RegistrationsController {
@@ -25,16 +26,15 @@ public class RegistrationsController {
 
     @PostMapping
     public Map<String, String> register(@RequestBody ClientDataRegistration clientData) {
-        String jwt_token;
+        String jwtToken;
         try {
-            System.out.println("LOG: " + clientData);
+            log.info("LOG: " + clientData);
             registrationService.saveData(clientData);
-
-            jwt_token = jwtUtil.generateToken(clientData.getPhoneNumber() != null ?
+            jwtToken = jwtUtil.generateToken(clientData.getPhoneNumber() != null ?
                     clientData.getPhoneNumber() : clientData.getIpn());
         } catch (Exception ex) {
             return Map.of("error", ex.getMessage());
         }
-        return Map.of("jwt_token", jwt_token);
+        return Map.of("jwt", jwtToken);
     }
 }

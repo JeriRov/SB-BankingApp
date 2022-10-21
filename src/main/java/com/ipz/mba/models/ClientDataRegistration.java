@@ -1,13 +1,14 @@
 package com.ipz.mba.models;
 
 import com.ipz.mba.entities.CustomerEntity;
-import com.ipz.mba.entities.RoleEntity;
 import com.ipz.mba.entities.UserEntity;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Getter @Setter
 @NoArgsConstructor

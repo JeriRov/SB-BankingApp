@@ -75,13 +75,13 @@ public class JWTFilter extends OncePerRequestFilter {
     }
 
     private void createResponse(HttpServletResponse response, Exception ex, String jwtToken) throws IOException {
-        log.error("jwtToken JWTVerificationException");
-        log.error("jwtToken {}", jwtToken);
-        response.setHeader("error", "Invalid Json Web Token");
+        log.error("jwt JWTVerificationException");
+        log.error("jwt {}", jwtToken);
+        response.setHeader("error", "Invalid JWT");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         var error = new HashMap<>();
-        error.put("error_message", ex.getMessage());
+        error.put("errorMessage", ex.getMessage());
         new ObjectMapper().writeValue(response.getOutputStream(), error);
     }
 }
