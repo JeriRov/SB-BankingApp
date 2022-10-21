@@ -11,9 +11,7 @@ import com.ipz.mba.repositories.RoleRepository;
 import com.ipz.mba.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -29,14 +27,14 @@ public class RegistrationService {
         this.usersRepository = usersRepository;
         this.roleRepository = roleRepository;
     }
+
     //@Transactional
     public void saveData(ClientDataRegistration clientData) throws Exception {
 
         // if client data contains null fields like a name, password, etc.
         if (ClientDataRegistration.hasNullFields(clientData)) {
             throw new ClientDataRegistrationHasNullFieldsException("Client-data has null fields");
-        }
-        else if (clientData.getPhoneNumber() == null && clientData.getIpn() == null) {
+        } else if (clientData.getPhoneNumber() == null && clientData.getIpn() == null) {
             throw new ClientDataRegistrationHasNullFieldsException("Phone-number and ipn are not specified.");
         }
         // if registration was by phone-number and this phone-number is present in DB
@@ -44,9 +42,9 @@ public class RegistrationService {
                 usersRepository.findUserByPhoneNumber(clientData.getPhoneNumber()).isPresent()) {
             throw new UserAlreadyExistsException("User with such phone-number already exists.");
         }
-        // if registration was by passport-number and passport-number is present in DB
+        // if registration was by ipn-number and ipn-number is present in DB
         else if (clientData.getIpn() != null &&
-                usersRepository.findUserByIpn(clientData.getIpn()).isPresent()){
+                usersRepository.findUserByIpn(clientData.getIpn()).isPresent()) {
             throw new UserAlreadyExistsException("User with such ipn already exists.");
         }
 

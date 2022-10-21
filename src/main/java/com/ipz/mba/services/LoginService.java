@@ -13,12 +13,11 @@ public class LoginService {
         this.usersRepository = usersRepository;
     }
 
-    public String getPasswordByPhone(String number){
+    public String getPasswordByPhone(String number) {
         return usersRepository.findUserByPhoneNumber(number).get().getPassword();
     }
 
-    public String getPasswordByIpn(String ipn){
+    public String getPasswordByIpn(String ipn) {
         return usersRepository.findUserByIpn(ipn).get().getPassword();
     }
-
 }

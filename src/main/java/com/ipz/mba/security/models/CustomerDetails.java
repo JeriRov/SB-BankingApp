@@ -9,16 +9,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CustomerDetails implements UserDetails {
-    private final CustomerEntity customer;
-
-    public CustomerDetails(CustomerEntity customer) {
-        this.customer = customer;
-    }
-
-    public CustomerEntity getCustomer() {
-        return customer;
-    }
+public record CustomerDetails(CustomerEntity customer) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

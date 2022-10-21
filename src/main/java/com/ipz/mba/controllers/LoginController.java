@@ -24,14 +24,14 @@ public class LoginController {
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping(path="/login")
-    public Map<String, String> login(@RequestBody ClientDataLogin cdl){
-        String number = "";
-        if(cdl.isPhone()){
-            log.info("LOG: Try to log in via phone {}" , cdl.getPhoneNumber());
+    @PostMapping(path = "/login")
+    public Map<String, String> login(@RequestBody ClientDataLogin cdl) {
+        String number;
+        if (cdl.isPhone()) {
+            log.info("LOG: Try to log in via phone {}", cdl.getPhoneNumber());
             number = cdl.getPhoneNumber();
-        }else{
-            log.info("LOG: Try to log in via ipn {}" , cdl.getIpn());
+        } else {
+            log.info("LOG: Try to log in via ipn {}", cdl.getIpn());
             number = cdl.getIpn();
         }
 
@@ -43,6 +43,6 @@ public class LoginController {
         }
         // refreshing jwt by phoneNumber
         String newJwtToken = jwtUtil.generateToken(number);
-        return Map.of("jwt-token", newJwtToken);
+        return Map.of("jwt", newJwtToken);
     }
 }

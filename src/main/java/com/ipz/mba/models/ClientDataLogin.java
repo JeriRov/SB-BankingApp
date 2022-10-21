@@ -7,7 +7,9 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class ClientDataLogin {
-    private String ipn, phoneNumber, password;
+    private String ipn;
+    private String phoneNumber;
+    private String password;
 
     public boolean isPhone(){
         return phoneNumber != null;
