@@ -10,6 +10,7 @@ import com.ipz.mba.exceptions.TransactionFailedException;
 import com.ipz.mba.models.TransferRequestData;
 import com.ipz.mba.repositories.CardRepository;
 import com.ipz.mba.repositories.CurrencyRepository;
+import com.ipz.mba.repositories.TransactionRepository;
 import com.ipz.mba.services.CardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
