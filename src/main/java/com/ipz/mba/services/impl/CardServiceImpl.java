@@ -8,6 +8,7 @@ import com.ipz.mba.exceptions.CardNotActiveException;
 import com.ipz.mba.exceptions.CardNotFoundException;
 import com.ipz.mba.exceptions.TransactionFailedException;
 import com.ipz.mba.models.TransferRequestData;
+import com.ipz.mba.services.CardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import java.time.ZonedDateTime;
 
 @Slf4j
 @Service
-public class CardServiceImpl {
+public class CardServiceImpl implements CardService {
     private final int SCALE = 8;
     private final String UAH_CURRENCY_NAME = "UAH";
     private final CardRepository cardRepository;
@@ -27,9 +28,9 @@ public class CardServiceImpl {
     private final CurrencyRepository currencyRepository;
 
     @Autowired
-    public CardService(CardRepository cardRepository,
-                       TransactionRepository transactionRepository,
-                       CurrencyRepository currencyRepository) {
+    public CardServiceImpl(CardRepository cardRepository,
+                           TransactionRepository transactionRepository,
+                           CurrencyRepository currencyRepository) {
 
         this.cardRepository = cardRepository;
         this.transactionRepository = transactionRepository;
@@ -37,6 +38,7 @@ public class CardServiceImpl {
     }
 
     @Transactional
+    @Override
     public void performTransaction(CustomerEntity senderEntity, TransferRequestData transferData) throws CardNotFoundException, CardNotActiveException, TransactionFailedException {
         log.info("CardService: performTransaction(transferData)");
 
