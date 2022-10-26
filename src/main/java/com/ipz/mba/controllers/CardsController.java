@@ -1,8 +1,6 @@
 package com.ipz.mba.controllers;
 
-import com.ipz.mba.entities.CardEntity;
 import com.ipz.mba.entities.CustomerEntity;
-import com.ipz.mba.entities.TransactionEntity;
 import com.ipz.mba.models.TransferRequestData;
 import com.ipz.mba.security.models.CustomerDetails;
 import lombok.extern.slf4j.Slf4j;
@@ -11,9 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
