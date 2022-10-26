@@ -28,7 +28,7 @@ public class ClientDataRegistration {
         return new UserEntity(data.getPhoneNumber(), data.getIpn(), data.getPassword());
     }
     public static CustomerEntity getCustomerEntity(ClientDataRegistration data) {
-        return new CustomerEntity(data.getFirstName(), data.getLastName(), new HashSet<>());
+        return new CustomerEntity(data.getFirstName(), data.getLastName(), new HashSet<>(), new HashSet<>());
     }
 
 }
