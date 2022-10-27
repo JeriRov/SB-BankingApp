@@ -95,3 +95,66 @@ Through an **identification code**:
 
     Key: Authorization
     Value: Bearer eyJ0eXAiOiJ141QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiNTI5MTgwNzMxMSIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjY1MjkzNzQsI4lhdCI6MTY2NjUyNTc3NH0.NkgoKCYJrJXXT23MH0SFeHBTsUJsBOl2DENSY_NRc94
+
+## Transactions
+
+**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/transfer`
+
+**Method:** Post
+
+**Headers**
+
+    Key: Authorization
+    Value: Bearer eyJ0eXAiOiJ141QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiNTI5MTgwNzMxMSIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjY1MjkzNzQsI4lhdCI6MTY2NjUyNTc3NH0.NkgoKCYJrJXXT23MH0SFeHBTsUJsBOl2DENSY_NRc94
+
+**Format:** JSON
+
+**Raw body example:**
+
+```
+{
+    "senderCardNumber": "5168324249821302",
+    "receiverCardNumber": "5168758323722993",
+    "receiverName": "Igor",
+    "sum": 150,
+    "purpose": "sending 150$"
+}
+```
+
+**Response body examples:**
+
+```
+{
+    "message": "success"
+}
+```
+
+```
+{
+    "error": "sender do not have that card"
+}
+```
+
+```
+{
+    "error": "receiver card was not found"
+}
+```
+
+```
+{
+    "error": "limit is lower than specified sum"
+}
+```
+
+```
+{
+    "error": "not enough money on the card"
+}
+```
+
+```
+{
+    "error": "transfer data is not valid"
+}
+```

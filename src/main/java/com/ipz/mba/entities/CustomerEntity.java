@@ -1,9 +1,7 @@
 package com.ipz.mba.entities;
 
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Setter;
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -12,6 +10,7 @@ import java.util.Set;
 @Table(name = "customers")
 @NoArgsConstructor @AllArgsConstructor
 @Setter @Getter
+@ToString
 public class CustomerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +26,10 @@ public class CustomerEntity {
     @JoinColumn(name = "id")
     private UserEntity userEntity;
 
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
+    private Set<CardEntity> cards;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "customer_roles",
@@ -35,9 +38,10 @@ public class CustomerEntity {
     )
     private Set<RoleEntity> roles;
 
-    public CustomerEntity(String firstName, String lastName, Set<RoleEntity> roles) {
+    public CustomerEntity(String firstName, String lastName, Set<CardEntity> cards, Set<RoleEntity> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.cards = cards;
         this.roles = roles;
     }
 }
