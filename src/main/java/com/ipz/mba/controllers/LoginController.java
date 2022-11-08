@@ -2,6 +2,7 @@ package com.ipz.mba.controllers;
 
 import com.ipz.mba.models.ClientDataLogin;
 import com.ipz.mba.security.jwt.JWTUtil;
+import com.ipz.mba.validation.Validation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,9 +31,15 @@ public class LoginController {
         if (cdl.isPhone()) {
             log.info("LOG: Try to log in via phone {}", cdl.getPhoneNumber());
             number = cdl.getPhoneNumber();
+            if(!Validation.checkPhone(number)){
+                return Map.of("error", "bad phone number");
+            }
         } else {
             log.info("LOG: Try to log in via ipn {}", cdl.getIpn());
             number = cdl.getIpn();
+            if(!Validation.checkIpn(number)){
+                return Map.of("error", "bad ipn");
+            }
         }
 
         var authToken = new UsernamePasswordAuthenticationToken(number, cdl.getPassword());

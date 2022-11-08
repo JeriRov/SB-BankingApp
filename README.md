@@ -69,6 +69,13 @@ Through a **phone number**:
     "password": "examplePassword"
 }
 ```
+Validation:
+```
+checks is it ukrainian number
+checks length of number
+checks operator's codes
+```
+"error": "bad phone number"
 
 Through an **identification code**:
 
@@ -78,6 +85,11 @@ Through an **identification code**:
     "password": "examplePassword"
 }
 ```
+Validation:
+```
+checks ipn length
+```
+return "error": "bad ipn"
 
 **Response body example:**
 
