@@ -58,7 +58,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         }
         // if passport-number is present in DB
         else if (usersRepository.findByPassportNumber(cdr.getPassportNumber()).isPresent()) {
-            throw new UserAlreadyExistsException("User with such passport number already exists.");
+            throw new UserAlreadyExistsException("User with such passport-number already exists.");
         }
 
         // password encoder
