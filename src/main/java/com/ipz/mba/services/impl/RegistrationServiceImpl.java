@@ -4,12 +4,14 @@ import com.ipz.mba.entities.CustomerEntity;
 import com.ipz.mba.entities.RoleEntity;
 import com.ipz.mba.entities.UserEntity;
 import com.ipz.mba.exceptions.ClientDataRegistrationHasNullFieldsException;
+import com.ipz.mba.exceptions.ClientDataRegistrationValidationException;
 import com.ipz.mba.exceptions.UserAlreadyExistsException;
 import com.ipz.mba.models.ClientDataRegistration;
 import com.ipz.mba.repositories.CustomerRepository;
 import com.ipz.mba.repositories.RoleRepository;
 import com.ipz.mba.repositories.UserRepository;
 import com.ipz.mba.services.RegistrationService;
+import com.ipz.mba.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,6 +42,12 @@ public class RegistrationServiceImpl implements RegistrationService {
         // if client data contains null fields like a name, password, etc.
         if (ClientDataRegistration.hasNullFields(cdr)) {
             throw new ClientDataRegistrationHasNullFieldsException("Client-data has null fields");
+        }
+        else if (!Validation.checkIpn(cdr.getIpn())) {
+            throw new ClientDataRegistrationValidationException("bad ipn");
+        }
+        else if (!Validation.checkPhone(cdr.getPhoneNumber())) {
+            throw new ClientDataRegistrationValidationException("bad phone number");
         }
         // if registration was by phone-number and this phone-number is present in DB
         else if (cdr.getPhoneNumber() != null &&
