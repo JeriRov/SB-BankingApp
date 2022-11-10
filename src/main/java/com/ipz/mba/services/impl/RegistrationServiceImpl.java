@@ -25,7 +25,6 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final CustomerRepository customersRepository;
     private final UserRepository usersRepository;
     private final RoleRepository roleRepository;
-
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -42,22 +41,24 @@ public class RegistrationServiceImpl implements RegistrationService {
         // if client data contains null fields like a name, password, etc.
         if (ClientDataRegistration.hasNullFields(cdr)) {
             throw new ClientDataRegistrationHasNullFieldsException("Client-data has null fields");
-        }
-        else if (!Validation.checkIpn(cdr.getIpn())) {
+        } else if (!Validation.checkIpn(cdr.getIpn())) {
             throw new ClientDataRegistrationValidationException("bad ipn");
-        }
-        else if (!Validation.checkPhone(cdr.getPhoneNumber())) {
+        } else if (!Validation.checkPhoneNumber(cdr.getPhoneNumber())) {
             throw new ClientDataRegistrationValidationException("bad phone number");
+        } else if (!Validation.checkPassportNumber(cdr.getPassportNumber())) {
+            throw new ClientDataRegistrationValidationException("bad passport number");
         }
-        // if registration was by phone-number and this phone-number is present in DB
-        else if (cdr.getPhoneNumber() != null &&
-                usersRepository.findUserByPhoneNumber(cdr.getPhoneNumber()).isPresent()) {
+        // if phone-number is present in DB
+        else if (usersRepository.findUserByPhoneNumber(cdr.getPhoneNumber()).isPresent()) {
             throw new UserAlreadyExistsException("User with such phone-number already exists.");
         }
-        // if registration was by ipn-number and ipn-number is present in DB
-        else if (cdr.getIpn() != null &&
-                usersRepository.findUserByIpn(cdr.getIpn()).isPresent()) {
+        // if ipn-number is present in DB
+        else if (usersRepository.findUserByIpn(cdr.getIpn()).isPresent()) {
             throw new UserAlreadyExistsException("User with such ipn already exists.");
+        }
+        // if passport-number is present in DB
+        else if (usersRepository.findByPassportNumber(cdr.getPassportNumber()).isPresent()) {
+            throw new UserAlreadyExistsException("User with such passport number already exists.");
         }
 
         // password encoder
