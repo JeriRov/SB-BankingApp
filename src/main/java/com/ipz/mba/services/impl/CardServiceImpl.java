@@ -94,11 +94,9 @@ public class CardServiceImpl implements CardService {
             // if we send money from uah-card
             if (senderCardCurrency.getCurrencyName().equals(UAH_CURRENCY_NAME)) {
                 transactionalSum = transactionalSum.divide(receiverCardCurrency.getSalesExchangeRate(), SCALE, RoundingMode.HALF_UP);
-            }
-            else if (receiverCardCurrency.getCurrencyName().equals(UAH_CURRENCY_NAME)) {
+            } else if (receiverCardCurrency.getCurrencyName().equals(UAH_CURRENCY_NAME)) {
                 transactionalSum = transactionalSum.multiply(senderCardCurrency.getBuyingExchangeRate());
-            }
-            else {
+            } else {
                 // convert transactionalSum to uah at first
                 transactionalSum = transactionalSum.multiply(senderCardCurrency.getBuyingExchangeRate());
 
