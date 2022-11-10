@@ -30,8 +30,7 @@ public class RegistrationsController {
         try {
             log.info("LOG: " + clientData);
             registrationService.saveData(clientData);
-            jwtToken = jwtUtil.generateToken(clientData.getPhoneNumber() != null ?
-                    clientData.getPhoneNumber() : clientData.getIpn());
+            jwtToken = jwtUtil.generateToken(clientData.getIpn());
         } catch (Exception ex) {
             return Map.of("error", ex.getMessage());
         }
