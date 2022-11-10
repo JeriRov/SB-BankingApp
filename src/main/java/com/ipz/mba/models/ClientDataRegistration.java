@@ -22,7 +22,8 @@ public class ClientDataRegistration {
     private String password;
 
     public static boolean hasNullFields(ClientDataRegistration clientData) {
-        return clientData.getFirstName() == null || clientData.getLastName() == null || clientData.getPassword() == null;
+        return clientData.getFirstName() == null || clientData.getLastName() == null || clientData.getPassword() == null ||
+                clientData.getPhoneNumber() == null || clientData.getIpn() == null;
     }
     public static UserEntity getUserEntity(ClientDataRegistration data) {
         return new UserEntity(data.getPhoneNumber(), data.getIpn(), data.getPassword());
