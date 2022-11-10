@@ -19,16 +19,39 @@ This project was created for the Mobile Banking App.
 
 **Raw body example:**
 
+`Old passport format: 2 letters and 6 numbers`
 ```
 {
     "firstName": "name",
     "lastName": "surname",
     "phoneNumber": "+380501297847",
     "ipn": "5291807314",
+    "passportNumber": "БФ345678",
     "password": "examplePassword"
 }
 ```
-
+`2016 passport format: 13 numbers`
+```
+{
+    "firstName": "name",
+    "lastName": "surname",
+    "phoneNumber": "+380501297847",
+    "ipn": "5291807314",
+    "passportNumber": "8412452412002",
+    "password": "examplePassword"
+}
+```
+`2020 passport format: 9 numbers`
+```
+{
+    "firstName": "name",
+    "lastName": "surname",
+    "phoneNumber": "+380501297847",
+    "ipn": "5291807314",
+    "passportNumber": "523516743",
+    "password": "examplePassword"
+}
+```
 **Response body example:**
 
 ```
@@ -61,6 +84,14 @@ This project was created for the Mobile Banking App.
 }
 ```
 
+**Response body example in case when such passport-number already exists:**
+
+```
+{
+    "error": "User with such passport-number already exists."
+}
+```
+
 **Response body example in case when ipn length do not equal 10:**
 
 ```
@@ -74,6 +105,14 @@ This project was created for the Mobile Banking App.
 ```
 {
     "error": "bad phone number"
+}
+```
+
+**Response body example in case when passport-number is in incorrect format:**
+
+```
+{
+    "error": "bad passport number"
 }
 ```
 

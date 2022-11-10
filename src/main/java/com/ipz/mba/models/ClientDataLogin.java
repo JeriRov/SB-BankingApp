@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -15,7 +16,7 @@ public class ClientDataLogin {
     private String phoneNumber;
     private String password;
 
-    public boolean isPhone(){
+    public boolean isPhone() {
         return phoneNumber != null;
     }
 }

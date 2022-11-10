@@ -31,13 +31,13 @@ public class LoginController {
         if (cdl.isPhone()) {
             log.info("LOG: Try to log in via phone {}", cdl.getPhoneNumber());
             number = cdl.getPhoneNumber();
-            if(!Validation.checkPhone(number)){
+            if (!Validation.checkPhoneNumber(number)) {
                 return Map.of("error", "bad phone number");
             }
         } else {
             log.info("LOG: Try to log in via ipn {}", cdl.getIpn());
             number = cdl.getIpn();
-            if(!Validation.checkIpn(number)){
+            if (!Validation.checkIpn(number)) {
                 return Map.of("error", "bad ipn");
             }
         }
