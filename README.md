@@ -19,23 +19,11 @@ This project was created for the Mobile Banking App.
 
 **Raw body example:**
 
-Through a **phone number**:
-
 ```
 {
     "firstName": "name",
     "lastName": "surname",
-    "phoneNumber": "+38010101010",
-    "password": "examplePassword"
-}
-```
-
-Through an **identification code**:
-
-```
-{
-    "firstName": "name",
-    "lastName": "surname",
+    "phoneNumber": "+380501297847",
     "ipn": "5291807314",
     "password": "examplePassword"
 }
@@ -46,6 +34,46 @@ Through an **identification code**:
 ```
 {
     "jwt": "eyJ0eXAiOiJ141QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiNTI5MTgwNzMxMSIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjY1MjkzNzQsI4lhdCI6MTY2NjUyNTc3NH0.NkgoKCYJrJXXT23MH0SFeHBTsUJsBOl2DENSY_NRc94"
+}
+```
+
+**Response body example in case when not all data is received:**
+
+```
+{
+    "error": "Client-data has null fields"
+}
+```
+
+**Response body example in case when such ipn already exists:**
+
+```
+{
+    "error": "User with such ipn already exists."
+}
+```
+
+**Response body example in case when such phone-number already exists:**
+
+```
+{
+    "error": "User with such phone-number already exists."
+}
+```
+
+**Response body example in case when ipn length do not equal 10:**
+
+```
+{
+    "error": "bad ipn"
+}
+```
+
+**Response body example in case when phone-number is in incorrect format:**
+
+```
+{
+    "error": "bad phone number"
 }
 ```
 
