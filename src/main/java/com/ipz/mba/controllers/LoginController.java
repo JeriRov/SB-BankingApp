@@ -2,7 +2,7 @@ package com.ipz.mba.controllers;
 
 import com.ipz.mba.models.ClientDataLogin;
 import com.ipz.mba.security.jwt.JWTUtil;
-import com.ipz.mba.validation.Validation;
+import com.ipz.mba.utils.Validation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
