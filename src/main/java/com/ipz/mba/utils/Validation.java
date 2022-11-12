@@ -1,4 +1,4 @@
-package com.ipz.mba.validation;
+package com.ipz.mba.utils;
 
 import java.util.regex.Pattern;
 

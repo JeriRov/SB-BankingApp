@@ -11,7 +11,7 @@ import com.ipz.mba.repositories.CustomerRepository;
 import com.ipz.mba.repositories.RoleRepository;
 import com.ipz.mba.repositories.UserRepository;
 import com.ipz.mba.services.RegistrationService;
-import com.ipz.mba.validation.Validation;
+import com.ipz.mba.utils.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
