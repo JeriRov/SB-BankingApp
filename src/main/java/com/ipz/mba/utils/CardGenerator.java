@@ -16,25 +16,25 @@ public class CardGenerator {
         rand = new Random();
     }
 
-    public CardEntity createCard(boolean visa, CustomerEntity owner, String pin_code, CardTypeEntity type, String currency_name) {
+    public CardEntity createCard(boolean visa, CustomerEntity owner, String pin, CardTypeEntity type, String currency, int count) {
         CardEntity card = new CardEntity();
-        card.setCardNumber(generateNumber(visa));
+        card.setCardNumber(generateNumber(visa, count));
         card.setOwner(owner);
         ZonedDateTime created = ZonedDateTime.now();
         card.setCreationTime(created);
         ZonedDateTime expired = ZonedDateTime.now().plusYears(4);
         card.setExpirationTime(expired);
         card.setCvvCode(generateCVV());
-        card.setPinCode(pin_code);
+        card.setPinCode(pin);
         card.setCardType(type);
-        card.setCurrencyName(currency_name);
+        card.setCurrencyName(currency);
         card.setSum(new BigDecimal(0));
         card.setSumLimit(0);
         card.setIsBlocked(false);
         return card;
     }
 
-    private String generateNumber(boolean visa) {
+    private String generateNumber(boolean visa, int count) {
         StringBuilder cardNumber;
         //BIN
         if (visa) {
@@ -42,22 +42,17 @@ public class CardGenerator {
         } else {
             cardNumber = new StringBuilder("515072");
         }
-        for (int i = 0; i < 3; i++) {
-            cardNumber.append(Math.abs(rand.nextInt()) % 899 + 100);
-        }
+        cardNumber.append(1000000 + count + 1);
         return cardNumber.toString() + luhn(cardNumber.toString());
     }
 
-    public boolean validate(String number) {
-        if (number.length() < 16) return false;
-        return Integer.parseInt(number.substring(15, 16)) == luhn(number.substring(0, 15));
-    }
-
     private String generateCVV() {
-        return String.valueOf(Math.abs(rand.nextInt()) % 899 + 100);
+        StringBuilder result = new StringBuilder(String.valueOf(Math.abs(rand.nextInt()) % 1000));
+        while (result.length() < 3) result.insert(0, "0");
+        return result.toString();
     }
 
-    private int luhn(String number) {
+    public int luhn(String number) {
         int sum = 0;
         for (int i = 0; i < number.length(); i++) {
             if (i % 2 == 1) {

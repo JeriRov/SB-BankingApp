@@ -30,4 +30,11 @@ public class Validation {
                 || Pattern.matches(twentySixteenPassportFormat, passportNumber)
                 || Pattern.matches(twentyTwentyPassportFormat, passportNumber);
     }
+
+    //There are banks that do not follow this algorithm, but we don't work with them
+    public static boolean checkCardByLuhn(String cardNumber) {
+        if (cardNumber.length() < 16) return false;
+        CardGenerator cardGenerator = new CardGenerator();
+        return Integer.parseInt(cardNumber.substring(15, 16)) == cardGenerator.luhn(cardNumber.substring(0, 15));
+    }
 }
