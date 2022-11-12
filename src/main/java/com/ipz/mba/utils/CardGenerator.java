@@ -16,7 +16,7 @@ public class CardGenerator {
         rand = new Random();
     }
 
-    public CardEntity createCard(boolean visa, CustomerEntity owner, String pin, CardTypeEntity type, String currency, int count) {
+    public CardEntity createCard(boolean visa, CustomerEntity owner, String pin, CardTypeEntity type, String currency, long count) {
         CardEntity card = new CardEntity();
         card.setCardNumber(generateNumber(visa, count));
         card.setOwner(owner);
@@ -34,7 +34,7 @@ public class CardGenerator {
         return card;
     }
 
-    private String generateNumber(boolean visa, int count) {
+    private String generateNumber(boolean visa, long count) {
         StringBuilder cardNumber;
         //BIN
         if (visa) {
