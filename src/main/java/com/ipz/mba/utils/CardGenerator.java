@@ -38,9 +38,9 @@ public class CardGenerator {
         StringBuilder cardNumber;
         //BIN
         if (visa) {
-            cardNumber = new StringBuilder("415207");
+            cardNumber = new StringBuilder("41520713");
         } else {
-            cardNumber = new StringBuilder("515072");
+            cardNumber = new StringBuilder("51507213");
         }
         cardNumber.append(1000000 + count + 1);
         return cardNumber.toString() + luhn(cardNumber.toString());
