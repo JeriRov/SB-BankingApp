@@ -1,7 +1,7 @@
 package com.ipz.mba.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.ipz.mba.exceptions.CardNotActiveException;
+import com.ipz.mba.exceptions.*;
 import lombok.*;
 
 import javax.persistence.*;
@@ -43,6 +43,10 @@ public class CardEntity {
 
     @Column(name = "currency_name")
     private String currencyName;
+
+    @ManyToOne
+    @JoinColumn(name = "provider_id")
+    private ProviderEntity providerEntity;
 
     @Column(name = "sum")
     private BigDecimal sum;
