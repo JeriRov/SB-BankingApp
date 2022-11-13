@@ -1,6 +1,7 @@
 package com.ipz.mba.controllers;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.ipz.mba.models.RefreshToken;
 import com.ipz.mba.security.jwt.JWTUtil;
 import com.ipz.mba.services.RefreshTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
