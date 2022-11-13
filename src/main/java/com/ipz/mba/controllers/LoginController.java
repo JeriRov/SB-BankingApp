@@ -2,6 +2,7 @@ package com.ipz.mba.controllers;
 
 import com.ipz.mba.models.ClientDataLogin;
 import com.ipz.mba.security.jwt.JWTUtil;
+import com.ipz.mba.services.RefreshTokenService;
 import com.ipz.mba.utils.Validation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,14 @@ import java.util.Map;
 @RestController
 public class LoginController {
     private final AuthenticationManager authManager;
+    private final RefreshTokenService refreshTokenService;
     private final JWTUtil jwtUtil;
 
     @Autowired
-    public LoginController(@Qualifier("authenticationManager") AuthenticationManager authManager, JWTUtil jwtUtil) {
+    public LoginController(@Qualifier("authenticationManager") AuthenticationManager authManager,
+                           RefreshTokenService refreshTokenService, JWTUtil jwtUtil) {
         this.authManager = authManager;
+        this.refreshTokenService = refreshTokenService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -48,8 +52,14 @@ public class LoginController {
         } catch (BadCredentialsException ex) {
             return Map.of("error", "bad credentials");
         }
-        // refreshing jwt by phoneNumber
-        String newJwtToken = jwtUtil.generateAccessToken(number);
-        return Map.of("jwt", newJwtToken);
+
+        // generate pair of tokens
+        String newRefreshToken = refreshTokenService.switchRefreshToken(number);
+        String newAccessToken = jwtUtil.generateAccessToken(number);
+
+        return Map.of(
+                "refresh_token", newRefreshToken,
+                "access_token", newAccessToken
+        );
     }
 }
