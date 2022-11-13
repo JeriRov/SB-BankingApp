@@ -24,6 +24,8 @@ public class NewCardController {
 
     @PostMapping(path = "/user/newcard")
     public Map<String, CardEntity> login(@RequestBody NewCardData ncd) {
+        if(ncd.getPin() == null || ncd.getOwnerId() == -1 || ncd.getTypeId() == -1)
+            return Map.of("error", new CardEntity());
         return Map.of("new card", cardService.createCard(
                 ncd.isVisa(), ncd.getOwnerId(), ncd.getPin(), ncd.getTypeId(), ncd.getCurrency()));
     }
