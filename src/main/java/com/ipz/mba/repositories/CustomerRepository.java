@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface CustomerRepository extends CrudRepository<CustomerEntity, Long> {
     CustomerEntity findByUserEntity(UserEntity user);
+    CustomerEntity findCustomerEntityById(Long id);
 }

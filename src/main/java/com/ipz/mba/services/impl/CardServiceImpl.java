@@ -1,17 +1,13 @@
 package com.ipz.mba.services.impl;
 
-import com.ipz.mba.entities.CardEntity;
-import com.ipz.mba.entities.CurrencyEntity;
-import com.ipz.mba.entities.CustomerEntity;
-import com.ipz.mba.entities.TransactionEntity;
+import com.ipz.mba.entities.*;
 import com.ipz.mba.exceptions.CardNotActiveException;
 import com.ipz.mba.exceptions.CardNotFoundException;
 import com.ipz.mba.exceptions.TransactionFailedException;
 import com.ipz.mba.models.TransferRequestData;
-import com.ipz.mba.repositories.CardRepository;
-import com.ipz.mba.repositories.CurrencyRepository;
-import com.ipz.mba.repositories.TransactionRepository;
+import com.ipz.mba.repositories.*;
 import com.ipz.mba.services.CardService;
+import com.ipz.mba.utils.CardGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,17 +23,20 @@ public class CardServiceImpl implements CardService {
     private final int SCALE = 8;
     private final String UAH_CURRENCY_NAME = "UAH";
     private final CardRepository cardRepository;
+    private final CustomerRepository customerRepository;
     private final TransactionRepository transactionRepository;
     private final CurrencyRepository currencyRepository;
+    private final CardTypeRepository cardTypeRepository;
 
     @Autowired
-    public CardServiceImpl(CardRepository cardRepository,
-                           TransactionRepository transactionRepository,
-                           CurrencyRepository currencyRepository) {
-
+    public CardServiceImpl(CardRepository cardRepository, TransactionRepository transactionRepository,
+                           CurrencyRepository currencyRepository, CustomerRepository customerRepository,
+                           CardTypeRepository cardTypeRepository) {
         this.cardRepository = cardRepository;
         this.transactionRepository = transactionRepository;
         this.currencyRepository = currencyRepository;
+        this.customerRepository = customerRepository;
+        this.cardTypeRepository = cardTypeRepository;
     }
 
     @Transactional
@@ -105,6 +104,16 @@ public class CardServiceImpl implements CardService {
             }
         }
         return transactionalSum;
+    }
+
+    public CardEntity createCard(boolean isVisa, long ownerId, String pin, long typeId, String currency){
+        CardGenerator cardGenerator = new CardGenerator();
+        CustomerEntity customer = customerRepository.findCustomerEntityById(ownerId);
+        CardTypeEntity type = cardTypeRepository.findCardTypeEntitiesById(typeId);
+        long count = cardRepository.count();
+        CardEntity card = cardGenerator.createCard(isVisa, customer, pin, type, currency, count);
+        cardRepository.save(card);
+        return card;
     }
 
     private void validateAll(CardEntity senderCardEntity, CardEntity receiverCardEntity, Long sum) throws CardNotActiveException, TransactionFailedException {
