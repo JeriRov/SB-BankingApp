@@ -34,7 +34,7 @@ public class RefreshController {
             return Map.of("error", ex.getMessage());
         }
 
-        if (!refreshTokenService.isUserPresentWithRefreshToken(phoneNumber, refreshToken.getRefreshToken())) {
+        if (refreshTokenService.isUserPresentWithRefreshToken(phoneNumber, refreshToken.getRefreshToken()) == null) {
             return Map.of("error", "user with such refresh-token was not found");
         }
 
