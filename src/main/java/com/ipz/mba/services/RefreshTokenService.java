@@ -1,6 +1,9 @@
 package com.ipz.mba.services;
 
+import com.ipz.mba.entities.UserEntity;
+
 public interface RefreshTokenService {
     String switchRefreshToken(String number);
-    boolean isUserPresentWithRefreshToken(String phoneNumber, String refreshToken);
+    UserEntity isUserPresentWithRefreshToken(String phoneNumber, String refreshToken);
+    void updateRefreshToken(UserEntity userEntity, String refreshToken);
 }

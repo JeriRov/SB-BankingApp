@@ -36,11 +36,12 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     @Override
-    public boolean isUserPresentWithRefreshToken(String phoneNumber, String refreshToken) {
-        return userRepository.findUserByPhoneNumberAndRefreshToken(phoneNumber, refreshToken).isPresent();
+    public UserEntity isUserPresentWithRefreshToken(String phoneNumber, String refreshToken) {
+        return userRepository.findUserByPhoneNumberAndRefreshToken(phoneNumber, refreshToken).orElse(null);
     }
 
-    private void updateRefreshToken(UserEntity userEntity, String refreshToken) {
+    @Override
+    public void updateRefreshToken(UserEntity userEntity, String refreshToken) {
         log.info("RefreshTokenServiceImpl: updateRefreshToken()");
         userEntity.setRefreshToken(refreshToken);
         userRepository.save(userEntity);
