@@ -49,7 +49,7 @@ public class LoginController {
             return Map.of("error", "bad credentials");
         }
         // refreshing jwt by phoneNumber
-        String newJwtToken = jwtUtil.generateToken(number);
+        String newJwtToken = jwtUtil.generateAccessToken(number);
         return Map.of("jwt", newJwtToken);
     }
 }
