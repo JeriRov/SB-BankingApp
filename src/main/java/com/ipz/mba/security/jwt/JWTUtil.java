@@ -37,10 +37,7 @@ public class JWTUtil {
     }
 
     public String validateAccessToken(String token) {
-        JWTVerifier verifier = JWT.require(Algorithm.HMAC256(ACCESS_SECRET))
-                .withSubject(SUBJECT)
-                .withIssuer(ISSUER)
-                .build();
+        JWTVerifier verifier = getJWTVerifier(ACCESS_SECRET);
         DecodedJWT decodedJWT = verifier.verify(token);
         System.out.println(decodedJWT);
         // return phoneOrIpn
