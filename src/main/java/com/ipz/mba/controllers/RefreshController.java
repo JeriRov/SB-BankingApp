@@ -26,15 +26,15 @@ public class RefreshController {
     }
 
     @PostMapping
-    public Map<String, String> returnTokenPair(@RequestBody RefreshToken refreshToken) {
+    public Map<String, String> returnTokenPair(@RequestBody RefreshToken body) {
         String phoneNumber;
         try {
-            phoneNumber = jwtUtil.validateRefreshToken(refreshToken.getRefreshToken());
+            phoneNumber = jwtUtil.validateRefreshToken(body.getRefreshToken());
         } catch (JWTVerificationException ex) {
             return Map.of("error", ex.getMessage());
         }
 
-        if (refreshTokenService.isUserPresentWithRefreshToken(phoneNumber, refreshToken.getRefreshToken()) == null) {
+        if (refreshTokenService.isUserPresentWithRefreshToken(phoneNumber, body.getRefreshToken()) == null) {
             return Map.of("error", "user with such refresh-token was not found");
         }
 
