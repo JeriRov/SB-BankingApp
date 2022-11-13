@@ -36,7 +36,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     //@Transactional
-    public void saveData(ClientDataRegistration cdr) throws Exception {
+    public void saveData(ClientDataRegistration cdr, String refreshToken) throws Exception {
 
         // if client data contains null fields like a name, password, etc.
         if (ClientDataRegistration.hasNullFields(cdr)) {
@@ -67,6 +67,9 @@ public class RegistrationServiceImpl implements RegistrationService {
         // if all is ok, just save it
         UserEntity userEntity = ClientDataRegistration.getUserEntity(cdr);
         CustomerEntity customerEntity = ClientDataRegistration.getCustomerEntity(cdr);
+
+        // save generated refresh-token
+        userEntity.setRefreshToken(refreshToken);
 
         // add default role "user" to new customer
         Optional<RoleEntity> roleEntity = roleRepository.findByName("ROLE_USER");

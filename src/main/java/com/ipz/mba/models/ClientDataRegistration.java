@@ -29,7 +29,7 @@ public class ClientDataRegistration {
     }
 
     public static UserEntity getUserEntity(ClientDataRegistration data) {
-        return new UserEntity(data.getPhoneNumber(), data.getIpn(), data.getPassportNumber(), data.getPassword());
+        return new UserEntity(data.getPhoneNumber(), data.getIpn(), data.getPassportNumber(), null, data.getPassword());
     }
 
     public static CustomerEntity getCustomerEntity(ClientDataRegistration data) {

@@ -46,7 +46,7 @@ public class JWTFilter extends OncePerRequestFilter {
             log.info("jwt is {}", jwt);
             try {
                 // here we`ll have phoneNumber or ipn
-                String data = jwtUtil.validateToken(jwt);
+                String data = jwtUtil.validateAccessToken(jwt);
 
                 // search customer by phoneNumber at first, and then by ipn
                 UserDetails userDetailsSearchedByPhone = customerDetailsService.loadUserByUsername(data);
