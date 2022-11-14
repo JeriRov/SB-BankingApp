@@ -27,16 +27,18 @@ public class CardServiceImpl implements CardService {
     private final TransactionRepository transactionRepository;
     private final CurrencyRepository currencyRepository;
     private final CardTypeRepository cardTypeRepository;
+    private final ProviderRepository providerRepository;
 
     @Autowired
     public CardServiceImpl(CardRepository cardRepository, TransactionRepository transactionRepository,
                            CurrencyRepository currencyRepository, CustomerRepository customerRepository,
-                           CardTypeRepository cardTypeRepository) {
+                           CardTypeRepository cardTypeRepository, ProviderRepository providerRepository) {
         this.cardRepository = cardRepository;
         this.transactionRepository = transactionRepository;
         this.currencyRepository = currencyRepository;
         this.customerRepository = customerRepository;
         this.cardTypeRepository = cardTypeRepository;
+        this.providerRepository = providerRepository;
     }
 
     @Transactional
@@ -106,12 +108,12 @@ public class CardServiceImpl implements CardService {
         return transactionalSum;
     }
 
-    public CardEntity createCard(boolean isVisa, long ownerId, String pin, long typeId, String currency){
+    public CardEntity createCard(String providerName, CustomerEntity customer, String typeName, String currency){
         CardGenerator cardGenerator = new CardGenerator();
-        CustomerEntity customer = customerRepository.findCustomerEntityById(ownerId);
-        CardTypeEntity type = cardTypeRepository.findCardTypeEntitiesById(typeId);
+        CardTypeEntity type = cardTypeRepository.findCardTypeEntitiesByName(typeName);
         long count = cardRepository.count();
-        CardEntity card = cardGenerator.createCard(isVisa, customer, pin, type, currency, count);
+        ProviderEntity provider = providerRepository.findByProviderName(providerName);
+        CardEntity card = cardGenerator.createCard(provider, customer, type, currency, count);
         cardRepository.save(card);
         return card;
     }

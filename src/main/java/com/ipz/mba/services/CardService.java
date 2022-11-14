@@ -11,5 +11,5 @@ public interface CardService {
     void performTransaction(CustomerEntity senderEntity, TransferRequestData transferData) throws CardNotFoundException,
             CardNotActiveException, TransactionFailedException;
 
-    CardEntity createCard(boolean isVisa, long ownerId, String pin, long typeId, String currency);
+    CardEntity createCard(String provider, CustomerEntity customer, String typeName, String currency);
 }

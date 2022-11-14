@@ -1,10 +1,14 @@
 package com.ipz.mba.controllers;
 
+import com.ipz.mba.entities.CardEntity;
 import com.ipz.mba.entities.CustomerEntity;
+import com.ipz.mba.models.NewCardData;
 import com.ipz.mba.models.TransferRequestData;
 import com.ipz.mba.security.models.CustomerDetails;
 import com.ipz.mba.services.CardService;
+import com.ipz.mba.utils.Validation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -44,5 +48,15 @@ public class CardsController {
             log.error("performTransaction(data): {}", ex.getMessage());
             return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
         }
+    }
+
+    @PostMapping(path = "/newcard")
+    public Map<String, String> newCard(@RequestBody NewCardData ncd) {
+        if(!Validation.checkNewCardData(ncd))
+            return Map.of("error", "invalid data");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomerEntity customer = ((CustomerDetails) auth.getPrincipal()).getCustomer();
+        return Map.of("new card", cardService.createCard(
+                ncd.getProvider(), customer, ncd.getType(), ncd.getCurrency()).getCardNumber());
     }
 }

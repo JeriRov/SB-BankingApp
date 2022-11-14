@@ -12,7 +12,5 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class NewCardData {
-    private boolean isVisa;
-    private long ownerId = -1,typeId = -1;
-    private String currency = "UAH", pin;
+    private String currency = "UAH", provider = "Visa", type;
 }

@@ -3,6 +3,7 @@ package com.ipz.mba.utils;
 import com.ipz.mba.entities.CardEntity;
 import com.ipz.mba.entities.CardTypeEntity;
 import com.ipz.mba.entities.CustomerEntity;
+import com.ipz.mba.entities.ProviderEntity;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -10,23 +11,24 @@ import java.util.Random;
 
 public class CardGenerator {
 
-    Random rand;
+    private Random rand;
 
     public CardGenerator() {
         rand = new Random();
     }
 
-    public CardEntity createCard(boolean visa, CustomerEntity owner, String pin, CardTypeEntity type, String currency, long count) {
+    public CardEntity createCard(ProviderEntity provider, CustomerEntity owner, CardTypeEntity type, String currency, long count) {
         CardEntity card = new CardEntity();
-        card.setCardNumber(generateNumber(visa, count));
+        card.setCardNumber(generateNumber(provider.getId(), count));
         card.setOwner(owner);
         ZonedDateTime created = ZonedDateTime.now();
         card.setCreationTime(created);
         ZonedDateTime expired = ZonedDateTime.now().plusYears(4);
         card.setExpirationTime(expired);
         card.setCvvCode(generateCVV());
-        card.setPinCode(pin);
+        card.setPinCode(generatePin());
         card.setCardType(type);
+        card.setProviderEntity(provider);
         card.setCurrencyName(currency);
         card.setSum(new BigDecimal(0));
         card.setSumLimit(0);
@@ -34,10 +36,10 @@ public class CardGenerator {
         return card;
     }
 
-    private String generateNumber(boolean visa, long count) {
+    private String generateNumber(long provider, long count) {
         StringBuilder cardNumber;
         //BIN
-        if (visa) {
+        if (provider == 1) {
             cardNumber = new StringBuilder("41520713");
         } else {
             cardNumber = new StringBuilder("51507213");
@@ -49,6 +51,12 @@ public class CardGenerator {
     private String generateCVV() {
         StringBuilder result = new StringBuilder(String.valueOf(Math.abs(rand.nextInt()) % 1000));
         while (result.length() < 3) result.insert(0, "0");
+        return result.toString();
+    }
+
+    private String generatePin() {
+        StringBuilder result = new StringBuilder(String.valueOf(Math.abs(rand.nextInt()) % 10000));
+        while (result.length() < 4) result.insert(0, "0");
         return result.toString();
     }
 
