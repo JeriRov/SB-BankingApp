@@ -12,6 +12,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 @Slf4j
@@ -57,9 +59,16 @@ public class LoginController {
         String newRefreshToken = refreshTokenService.switchRefreshToken(number);
         String newAccessToken = jwtUtil.generateAccessToken(number);
 
+        Date refreshExpireDate = jwtUtil.getExpireDate(newRefreshToken, false);
+        Date accessExpireDate = jwtUtil.getExpireDate(newAccessToken, true);
+
+        var formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+
         return Map.of(
                 "refresh_token", newRefreshToken,
-                "access_token", newAccessToken
+                "refresh_expire_date", formatter.format(refreshExpireDate),
+                "access_token", newAccessToken,
+                "access_expire_date", formatter.format(accessExpireDate)
         );
     }
 }
