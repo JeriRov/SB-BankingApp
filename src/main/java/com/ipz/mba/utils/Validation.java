@@ -1,5 +1,7 @@
 package com.ipz.mba.utils;
 
+import com.ipz.mba.models.NewCardData;
+
 import java.util.regex.Pattern;
 
 public class Validation {
@@ -36,5 +38,11 @@ public class Validation {
         if (cardNumber.length() < 16) return false;
         CardGenerator cardGenerator = new CardGenerator();
         return Integer.parseInt(cardNumber.substring(15, 16)) == cardGenerator.luhn(cardNumber.substring(0, 15));
+    }
+
+    public static boolean checkNewCardData(NewCardData ncd){
+        if(!(ncd.getProvider().equals("Visa") || ncd.getProvider().equals("Mastercard")))
+            return false;
+        return ncd.getType() != null;
     }
 }

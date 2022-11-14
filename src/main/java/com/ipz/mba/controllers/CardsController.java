@@ -6,6 +6,7 @@ import com.ipz.mba.models.NewCardData;
 import com.ipz.mba.models.TransferRequestData;
 import com.ipz.mba.security.models.CustomerDetails;
 import com.ipz.mba.services.CardService;
+import com.ipz.mba.utils.Validation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +52,8 @@ public class CardsController {
 
     @PostMapping(path = "/newcard")
     public Map<String, String> newCard(@RequestBody NewCardData ncd) {
-        if(ncd.getType() == null)
-            return Map.of("error", "no type");
+        if(!Validation.checkNewCardData(ncd))
+            return Map.of("error", "invalid data");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomerEntity customer = ((CustomerDetails) auth.getPrincipal()).getCustomer();
         return Map.of("new card", cardService.createCard(
