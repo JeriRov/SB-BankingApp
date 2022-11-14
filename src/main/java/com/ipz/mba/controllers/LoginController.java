@@ -12,6 +12,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 @Slf4j
@@ -53,13 +55,6 @@ public class LoginController {
             return Map.of("error", "bad credentials");
         }
 
-        // generate pair of tokens
-        String newRefreshToken = refreshTokenService.switchRefreshToken(number);
-        String newAccessToken = jwtUtil.generateAccessToken(number);
-
-        return Map.of(
-                "refresh_token", newRefreshToken,
-                "access_token", newAccessToken
-        );
+        return jwtUtil.getTokensAndExpireDates(number, refreshTokenService);
     }
 }

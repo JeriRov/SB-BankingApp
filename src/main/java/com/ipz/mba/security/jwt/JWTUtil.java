@@ -4,11 +4,16 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.ipz.mba.services.RefreshTokenService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.Map;
+import java.util.TimeZone;
 
 @Component
 public class JWTUtil {
@@ -71,5 +76,30 @@ public class JWTUtil {
                 .withSubject(SUBJECT)
                 .withIssuer(ISSUER)
                 .build();
+    }
+
+    public Date getExpireDate(String token, boolean isAccessToken) {
+        JWTVerifier verifier = getJWTVerifier(isAccessToken ? ACCESS_SECRET : REFRESH_SECRET);
+        DecodedJWT decodedJWT = verifier.verify(token);
+        return decodedJWT.getExpiresAt();
+    }
+
+    public Map<String, String> getTokensAndExpireDates(String number, RefreshTokenService refreshTokenService) {
+        String newRefreshToken = refreshTokenService.switchRefreshToken(number);
+        String newAccessToken = generateAccessToken(number);
+
+        Date refreshExpireDate = getExpireDate(newRefreshToken, false);
+        Date accessExpireDate = getExpireDate(newAccessToken, true);
+
+        var formatter = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
+        TimeZone tz = TimeZone.getDefault();
+        String offsetId = tz.toZoneId().getRules().getStandardOffset(Instant.now()).getId();
+
+        return Map.of(
+                "refresh_token", newRefreshToken,
+                "refresh_expire_date", formatter.format(refreshExpireDate) + offsetId,
+                "access_token", newAccessToken,
+                "access_expire_date", formatter.format(accessExpireDate) + offsetId
+        );
     }
 }

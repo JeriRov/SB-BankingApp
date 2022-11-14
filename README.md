@@ -57,7 +57,9 @@ This project was created for the Mobile Banking App.
 ```
 {
     "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiMDI5MTExMTgwOSIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjgzNDc1NTIsImlhdCI6MTY2ODM0Mzk1Mn0.P0HA4LwqqhZyW9bexmRNcYipMYPbzRnrAq_ZogOXDvk",
-    "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNQkEiLCJwaG9uZU51bWJlciI6IiszODA1MDAzNTEwMzciLCJpcG4iOiIwMjkxMTExODA5IiwiaXNzIjoiTUJBX0lzc3VlciIsImV4cCI6MTY3MDkzNTk1MiwiaWF0IjoxNjY4MzQzOTUyfQ.6X8TuQYIsU2n0i-CCv8lx7Tpq8O0AnswcZaUgwdlyDw"
+    "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNQkEiLCJwaG9uZU51bWJlciI6IiszODA1MDAzNTEwMzciLCJpcG4iOiIwMjkxMTExODA5IiwiaXNzIjoiTUJBX0lzc3VlciIsImV4cCI6MTY3MDkzNTk1MiwiaWF0IjoxNjY4MzQzOTUyfQ.6X8TuQYIsU2n0i-CCv8lx7Tpq8O0AnswcZaUgwdlyDw",
+    "access_expire_date": "14-11-2022 22:27:30+02:00",
+    "refresh_expire_date": "14-12-2022 21:27:30+02:00"
 }
 ```
 
@@ -164,7 +166,9 @@ return "error": "bad ipn"
 ```
 {
     "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNQkEiLCJwaG9uZU51bWJlciI6IiszODA1MDEzOTc4MzAiLCJpcG4iOiIxMjM4NTAwMDAiLCJpc3MiOiJNQkFfSXNzdWVyIiwiZXhwIjoxNjcwOTM2MTYyLCJpYXQiOjE2NjgzNDQxNjJ9.pPACQ94iMxuVhhu48wU7NoH_KjrFnJu3lPC4qK5gzsA",
-    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiKzM4MDUwMTM5NzgzMCIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjgzNDc3NjIsImlhdCI6MTY2ODM0NDE2Mn0.Iwx3fBUbI7zXdc6TgYT68Ngp4VL4opGqc0sXGym-b4s"
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiKzM4MDUwMTM5NzgzMCIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjgzNDc3NjIsImlhdCI6MTY2ODM0NDE2Mn0.Iwx3fBUbI7zXdc6TgYT68Ngp4VL4opGqc0sXGym-b4s",
+    "access_expire_date": "14-11-2022 22:27:30+02:00",
+    "refresh_expire_date": "14-12-2022 21:27:30+02:00"
 }
 ```
 
@@ -199,7 +203,9 @@ return "error": "bad ipn"
 ```
 {
     "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNQkEiLCJwaG9uZU51bWJlciI6IiszODA1MDEzOTc4MzAiLCJpcG4iOiIxMjM4NTAwMDAiLCJpc3MiOiJNQkFfSXNzdWVyIiwiZXhwIjoxNjcwOTM2MTYyLCJpYXQiOjE2NjgzNDQxNjJ9.pPACQ94iMxuVhhu48wU7NoH_KjrFnJu3lPC4qK5gzsA",
-    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiKzM4MDUwMTM5NzgzMCIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjgzNDc3NjIsImlhdCI6MTY2ODM0NDE2Mn0.Iwx3fBUbI7zXdc6TgYT68Ngp4VL4opGqc0sXGym-b4s"
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiKzM4MDUwMTM5NzgzMCIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjgzNDc3NjIsImlhdCI6MTY2ODM0NDE2Mn0.Iwx3fBUbI7zXdc6TgYT68Ngp4VL4opGqc0sXGym-b4s",
+    "access_expire_date": "14-11-2022 22:27:30+02:00",
+    "refresh_expire_date": "14-12-2022 21:27:30+02:00"
 }
 ```
 
