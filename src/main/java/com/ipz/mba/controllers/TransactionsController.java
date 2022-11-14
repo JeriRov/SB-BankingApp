@@ -30,7 +30,7 @@ public class TransactionsController {
 
     @PostMapping("/new")
     public ResponseEntity<Map<String, String>> performTransaction(@RequestBody TransferRequestData data) {
-        log.info("AccountsController: performTransaction(data)");
+        log.info("TransactionsController: performTransaction(data)");
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomerEntity customer = ((CustomerDetails) auth.getPrincipal()).getCustomer();
@@ -38,7 +38,7 @@ public class TransactionsController {
         try {
             log.info(data.toString());
             if (!TransferRequestData.isValid(data)) {
-                throw new Exception("transfer data is not valid");
+                throw new Exception("transactions data is not valid");
             }
             cardService.performTransaction(customer, data);
 
