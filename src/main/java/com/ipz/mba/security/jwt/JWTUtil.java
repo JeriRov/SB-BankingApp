@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Map;
+import java.util.TimeZone;
 
 @Component
 public class JWTUtil {
@@ -90,12 +92,14 @@ public class JWTUtil {
         Date accessExpireDate = getExpireDate(newAccessToken, true);
 
         var formatter = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
+        TimeZone tz = TimeZone.getDefault();
+        String offsetId = tz.toZoneId().getRules().getStandardOffset(Instant.now()).getId();
 
         return Map.of(
                 "refresh_token", newRefreshToken,
-                "refresh_expire_date", formatter.format(refreshExpireDate),
+                "refresh_expire_date", formatter.format(refreshExpireDate) + offsetId,
                 "access_token", newAccessToken,
-                "access_expire_date", formatter.format(accessExpireDate)
+                "access_expire_date", formatter.format(accessExpireDate) + offsetId
         );
     }
 }
