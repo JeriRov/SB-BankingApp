@@ -106,12 +106,11 @@ public class CardServiceImpl implements CardService {
         return transactionalSum;
     }
 
-    public CardEntity createCard(boolean isVisa, long ownerId, String pin, long typeId, String currency){
+    public CardEntity createCard(String provider, CustomerEntity customer, String typeName, String currency){
         CardGenerator cardGenerator = new CardGenerator();
-        CustomerEntity customer = customerRepository.findCustomerEntityById(ownerId);
-        CardTypeEntity type = cardTypeRepository.findCardTypeEntitiesById(typeId);
+        CardTypeEntity type = cardTypeRepository.findCardTypeEntitiesByName(typeName);
         long count = cardRepository.count();
-        CardEntity card = cardGenerator.createCard(isVisa, customer, pin, type, currency, count);
+        CardEntity card = cardGenerator.createCard(providerId, customer, type, currency, count);
         cardRepository.save(card);
         return card;
     }

@@ -16,16 +16,16 @@ public class CardGenerator {
         rand = new Random();
     }
 
-    public CardEntity createCard(boolean visa, CustomerEntity owner, String pin, CardTypeEntity type, String currency, long count) {
+    public CardEntity createCard(int providerId, CustomerEntity owner, CardTypeEntity type, String currency, long count) {
         CardEntity card = new CardEntity();
-        card.setCardNumber(generateNumber(visa, count));
+        card.setCardNumber(generateNumber(providerId, count));
         card.setOwner(owner);
         ZonedDateTime created = ZonedDateTime.now();
         card.setCreationTime(created);
         ZonedDateTime expired = ZonedDateTime.now().plusYears(4);
         card.setExpirationTime(expired);
         card.setCvvCode(generateCVV());
-        card.setPinCode(pin);
+        card.setPinCode(generatePin());
         card.setCardType(type);
         card.setCurrencyName(currency);
         card.setSum(new BigDecimal(0));
@@ -34,13 +34,13 @@ public class CardGenerator {
         return card;
     }
 
-    private String generateNumber(boolean visa, long count) {
+    private String generateNumber(int provider, long count) {
         StringBuilder cardNumber;
         //BIN
-        if (visa) {
-            cardNumber = new StringBuilder("415207");
+        if (provider == 1) {
+            cardNumber = new StringBuilder("41520713");
         } else {
-            cardNumber = new StringBuilder("515072");
+            cardNumber = new StringBuilder("51507213");
         }
         cardNumber.append(1000000 + count + 1);
         return cardNumber.toString() + luhn(cardNumber.toString());
@@ -49,6 +49,12 @@ public class CardGenerator {
     private String generateCVV() {
         StringBuilder result = new StringBuilder(String.valueOf(Math.abs(rand.nextInt()) % 1000));
         while (result.length() < 3) result.insert(0, "0");
+        return result.toString();
+    }
+
+    private String generatePin() {
+        StringBuilder result = new StringBuilder(String.valueOf(Math.abs(rand.nextInt()) % 10000));
+        while (result.length() < 4) result.insert(0, "0");
         return result.toString();
     }
 
