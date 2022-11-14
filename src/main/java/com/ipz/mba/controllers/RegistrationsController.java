@@ -44,7 +44,7 @@ public class RegistrationsController {
         Date refreshExpireDate = jwtUtil.getExpireDate(newRefreshToken, false);
         Date accessExpireDate = jwtUtil.getExpireDate(newAccessToken, true);
 
-        var formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+        var formatter = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
 
         return Map.of(
                 "refresh_token", newRefreshToken,
