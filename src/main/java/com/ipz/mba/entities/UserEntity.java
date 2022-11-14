@@ -28,13 +28,18 @@ public class UserEntity {
 
     @Column(name = "passport_number")
     private String passportNumber;
+
+    @Column(name = "refresh_token")
+    private String refreshToken;
+
     @Column(name = "password")
     private String password;
 
-    public UserEntity(String phoneNumber, String ipn, String passportNumber, String password) {
+    public UserEntity(String phoneNumber, String ipn, String passportNumber, String refreshToken, String password) {
         this.phoneNumber = phoneNumber;
         this.ipn = ipn;
         this.passportNumber = passportNumber;
+        this.refreshToken = refreshToken;
         this.password = password;
     }
 }

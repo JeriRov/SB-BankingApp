@@ -26,15 +26,22 @@ public class RegistrationsController {
     }
 
     @PostMapping
-    public Map<String, String> register(@RequestBody ClientDataRegistration clientData) {
-        String jwtToken;
+    public Map<String, String> register(@RequestBody ClientDataRegistration cdr) {
+        String newAccessToken, newRefreshToken;
         try {
-            log.info("LOG: " + clientData);
-            registrationService.saveData(clientData);
-            jwtToken = jwtUtil.generateToken(clientData.getIpn());
+            log.info("LOG: " + cdr);
+            newRefreshToken = jwtUtil.generateRefreshToken(cdr.getPhoneNumber(), cdr.getIpn());
+
+            registrationService.saveData(cdr, newRefreshToken);
+
+            newAccessToken = jwtUtil.generateAccessToken(cdr.getIpn());
         } catch (Exception ex) {
             return Map.of("error", ex.getMessage());
         }
-        return Map.of("jwt", jwtToken);
+
+        return Map.of(
+                "refresh_token", newRefreshToken,
+                "access_token", newAccessToken
+        );
     }
 }

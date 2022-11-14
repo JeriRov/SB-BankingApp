@@ -50,12 +50,12 @@ public class CardsController {
     }
 
     @PostMapping(path = "/newcard")
-    public Map<String, CardEntity> newcard(@RequestBody NewCardData ncd) {
+    public Map<String, String> newCard(@RequestBody NewCardData ncd) {
         if(ncd.getType() == null)
-            return Map.of("error", new CardEntity());
+            return Map.of("error", "no type");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomerEntity customer = ((CustomerDetails) auth.getPrincipal()).getCustomer();
         return Map.of("new card", cardService.createCard(
-                ncd.getProvider(), customer, ncd.getType(), ncd.getCurrency()));
+                ncd.getProvider(), customer, ncd.getType(), ncd.getCurrency()).getCardNumber());
     }
 }
