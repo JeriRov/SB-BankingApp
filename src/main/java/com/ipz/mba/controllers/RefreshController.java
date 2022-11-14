@@ -40,20 +40,7 @@ public class RefreshController {
             return Map.of("error", "user with such refresh-token was not found");
         }
 
-        String newRefreshToken = refreshTokenService.switchRefreshToken(phoneNumber);
-        String newAccessToken = jwtUtil.generateAccessToken(phoneNumber);
-
-        Date refreshExpireDate = jwtUtil.getExpireDate(newRefreshToken, false);
-        Date accessExpireDate = jwtUtil.getExpireDate(newAccessToken, true);
-
-        var formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-
-        return Map.of(
-                "refresh_token", newRefreshToken,
-                "refresh_expire_date", formatter.format(refreshExpireDate),
-                "access_token", newAccessToken,
-                "access_expire_date", formatter.format(accessExpireDate)
-        );
+        return jwtUtil.getTokensAndExpireDates(phoneNumber, refreshTokenService);
     }
 
     @PostMapping("/logout")

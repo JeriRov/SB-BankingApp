@@ -55,20 +55,6 @@ public class LoginController {
             return Map.of("error", "bad credentials");
         }
 
-        // generate pair of tokens
-        String newRefreshToken = refreshTokenService.switchRefreshToken(number);
-        String newAccessToken = jwtUtil.generateAccessToken(number);
-
-        Date refreshExpireDate = jwtUtil.getExpireDate(newRefreshToken, false);
-        Date accessExpireDate = jwtUtil.getExpireDate(newAccessToken, true);
-
-        var formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-
-        return Map.of(
-                "refresh_token", newRefreshToken,
-                "refresh_expire_date", formatter.format(refreshExpireDate),
-                "access_token", newAccessToken,
-                "access_expire_date", formatter.format(accessExpireDate)
-        );
+        return jwtUtil.getTokensAndExpireDates(number, refreshTokenService);
     }
 }
