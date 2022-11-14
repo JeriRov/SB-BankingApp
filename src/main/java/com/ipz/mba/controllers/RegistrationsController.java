@@ -31,7 +31,9 @@ public class RegistrationsController {
 
     @PostMapping
     public Map<String, String> register(@RequestBody ClientDataRegistration cdr) {
+        var formatter = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
         String newAccessToken, newRefreshToken;
+
         try {
             log.info("LOG: " + cdr);
             newRefreshToken = jwtUtil.generateRefreshToken(cdr.getPhoneNumber(), cdr.getIpn());
@@ -46,7 +48,6 @@ public class RegistrationsController {
         Date refreshExpireDate = jwtUtil.getExpireDate(newRefreshToken, false);
         Date accessExpireDate = jwtUtil.getExpireDate(newAccessToken, true);
 
-        var formatter = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
         TimeZone tz = TimeZone.getDefault();
         String offsetId = tz.toZoneId().getRules().getStandardOffset(Instant.now()).getId();
 
