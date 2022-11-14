@@ -72,4 +72,10 @@ public class JWTUtil {
                 .withIssuer(ISSUER)
                 .build();
     }
+
+    public Date getExpireDate(String token, boolean isAccessToken) {
+        JWTVerifier verifier = getJWTVerifier(isAccessToken ? ACCESS_SECRET : REFRESH_SECRET);
+        DecodedJWT decodedJWT = verifier.verify(token);
+        return decodedJWT.getExpiresAt();
+    }
 }
