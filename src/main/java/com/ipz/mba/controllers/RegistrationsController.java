@@ -31,7 +31,7 @@ public class RegistrationsController {
 
     @PostMapping
     public Map<String, String> register(@RequestBody ClientDataRegistration cdr) {
-        var formatter = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
+        var formatter = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
         String newAccessToken, newRefreshToken;
 
         try {
