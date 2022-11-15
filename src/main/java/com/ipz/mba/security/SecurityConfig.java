@@ -1,6 +1,6 @@
 package com.ipz.mba.security;
 
-import com.ipz.mba.filter.JWTFilter;
+import com.ipz.mba.security.filter.JWTFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
