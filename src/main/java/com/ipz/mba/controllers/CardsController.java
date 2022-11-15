@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -44,7 +45,9 @@ public class CardsController {
     public Map<String, List<CardEntity>> allCards(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomerEntity customer = ((CustomerDetails) auth.getPrincipal()).getCustomer();
-        return Map.of("ok",cardService.getAllCards(customer.getId()));
+        List<CardEntity> cards = cardService.getAllCards(customer.getId());
+        cards.sort(Comparator.comparing(CardEntity::getCardNumber));
+        return Map.of("ok", cards);
     }
 
     @GetMapping(path = "/{cardNumber}")
