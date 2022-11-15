@@ -244,7 +244,7 @@ return "error": "bad ipn"
 
 ---
 
-## Transactions
+## Do transactions
 
 **Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/transactions/new`
 
@@ -259,7 +259,7 @@ return "error": "bad ipn"
 
 **Raw body example:**
 
-```
+```json
 {
     "senderCardNumber": "5168324249821302",
     "receiverCardNumber": "5168758323722993",
@@ -305,4 +305,41 @@ return "error": "bad ipn"
 {
     "error": "transfer data is not valid"
 }
+```
+---
+
+## Get all user transactions
+
+**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/transactions/all`
+
+**Method:** Post
+
+**Headers**
+
+    Key: Authorization
+    Value: Bearer eyJ0eXAiOiJ141QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiNTI5MTgwNzMxMSIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjY1MjkzNzQsI4lhdCI6MTY2NjUyNTc3NH0.NkgoKCYJrJXXT23MH0SFeHBTsUJsBOl2DENSY_NRc94
+
+**Format:** JSON
+
+**Response body example:**
+
+```json
+[
+    {
+        "id": 1,
+        "provider": "Mastercard",
+        "currency": "UAH",
+        "time": "2023-10-16T00:00:00+03:00",
+        "sum": 500,
+        "profit": true
+    },
+    {
+        "id": 6,
+        "provider": "Mastercard",
+        "currency": "EUR",
+        "time": "2022-11-15T13:11:10.504181+02:00",
+        "sum": 35,
+        "profit": false
+    }
+]
 ```
