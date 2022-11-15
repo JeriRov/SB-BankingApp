@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -44,5 +45,15 @@ public class CardsController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomerEntity customer = ((CustomerDetails) auth.getPrincipal()).getCustomer();
         return Map.of("ok",cardService.getAllCards(customer.getId()));
+    }
+
+    @GetMapping(path = "/{cardNumber}")
+    public Map<String, CardEntity> getCard(@PathVariable  String cardNumber) {
+        if (!Validation.checkCardByLuhn(cardNumber))
+            return Map.of("wrong number", new CardEntity());
+        Optional<CardEntity> card = cardService.getCard(cardNumber);
+        if (card.isEmpty())
+            return Map.of("card not found", new CardEntity());
+        return Map.of("ok", card.get());
     }
 }

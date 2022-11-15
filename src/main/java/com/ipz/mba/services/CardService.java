@@ -8,6 +8,7 @@ import com.ipz.mba.exceptions.TransactionFailedException;
 import com.ipz.mba.models.TransferRequestData;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CardService {
     void performTransaction(CustomerEntity senderEntity, TransferRequestData transferData) throws CardNotFoundException,
@@ -16,4 +17,6 @@ public interface CardService {
     CardEntity createCard(String provider, CustomerEntity customer, String typeName, String currency);
 
     List<CardEntity> getAllCards(long ownerId);
+
+    Optional<CardEntity> getCard(String number);
 }

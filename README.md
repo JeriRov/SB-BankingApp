@@ -244,6 +244,142 @@ return "error": "bad ipn"
 
 ---
 
+
+## Get all cards 
+
+**Method:** Get
+
+**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/cards/`
+
+**Headers**
+
+    Key: Authorization
+    Value: Bearer eyJ0eXAiOiJ141QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiNTI5MTgwNzMxMSIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjY1MjkzNzQsI4lhdCI6MTY2NjUyNTc3NH0.NkgoKCYJrJXXT23MH0SFeHBTsUJsBOl2DENSY_NRc94
+
+**Response body examples:**
+
+```json
+{
+    "ok": [
+        {
+            "cardNumber": "4152071310000053",
+            "creationTime": "2022-11-14T15:15:20.497814+02:00",
+            "expirationTime": "2026-11-14T15:15:20.498811+02:00",
+            "cvvCode": "087",
+            "pinCode": "7468",
+            "cardType": {
+                "id": 2,
+                "name": "Debit"
+            },
+            "currencyName": "UAH",
+            "providerEntity": {
+                "id": 1,
+                "providerName": "Mastercard",
+                "code": "51520713"
+            },
+            "sum": 0,
+            "sumLimit": 0,
+            "isBlocked": false
+        },
+        {
+            "cardNumber": "4152071310000061",
+            "creationTime": "2022-11-14T15:34:22.858934+02:00",
+            "expirationTime": "2026-11-14T15:34:22.858934+02:00",
+            "cvvCode": "806",
+            "pinCode": "3768",
+            "cardType": {
+                "id": 2,
+                "name": "Debit"
+            },
+            "currencyName": "UAH",
+            "providerEntity": {
+                "id": 1,
+                "providerName": "Mastercard",
+                "code": "51520713"
+            },
+            "sum": 0,
+            "sumLimit": 0,
+            "isBlocked": false
+        }
+    ]
+}
+```
+
+## Get card by number
+
+**Method:** Get
+
+**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/cards/{cardNumber}`
+
+**Headers**
+
+    Key: Authorization
+    Value: Bearer eyJ0eXAiOiJ141QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiNTI5MTgwNzMxMSIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjY1MjkzNzQsI4lhdCI6MTY2NjUyNTc3NH0.NkgoKCYJrJXXT23MH0SFeHBTsUJsBOl2DENSY_NRc94
+
+**Response body examples:**
+
+```json
+{
+    "ok": {
+        "cardNumber": "4152071310000053",
+        "creationTime": "2022-11-14T15:15:20.497814+02:00",
+        "expirationTime": "2026-11-14T15:15:20.498811+02:00",
+        "cvvCode": "087",
+        "pinCode": "7468",
+        "cardType": {
+            "id": 2,
+            "name": "Debit"
+        },
+        "currencyName": "UAH",
+        "providerEntity": {
+            "id": 1,
+            "providerName": "Mastercard",
+            "code": "51520713"
+        },
+        "sum": 0,
+        "sumLimit": 0,
+        "isBlocked": false
+    }
+}
+```
+
+## Create new card
+
+**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/cards/new`
+
+**Method:** Post
+
+**Format:** JSON
+
+**Raw body example:**
+
+```json
+{
+    "provider": "Mastercard",
+    "type": "Debit",
+    "currency": "UAH"
+}
+```
+
+**Headers**
+
+    Key: Authorization
+    Value: Bearer eyJ0eXAiOiJ141QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiNTI5MTgwNzMxMSIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjY1MjkzNzQsI4lhdCI6MTY2NjUyNTc3NH0.NkgoKCYJrJXXT23MH0SFeHBTsUJsBOl2DENSY_NRc94
+
+**Response body examples:**
+
+```json
+{
+    "new card": "4152071310000095"
+}
+```
+
+```json
+{
+    "error": "invalid data"
+}
+```
+
 ## Do transactions
 
 **Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/transactions/new`

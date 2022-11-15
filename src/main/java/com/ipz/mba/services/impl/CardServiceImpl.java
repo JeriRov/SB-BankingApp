@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -121,6 +122,10 @@ public class CardServiceImpl implements CardService {
 
     public List<CardEntity> getAllCards(long ownerId){
         return cardRepository.findCardEntitiesByOwnerId(ownerId);
+    }
+
+    public Optional<CardEntity> getCard(String number){
+        return cardRepository.findByCardNumber(number);
     }
 
     private void validateAll(CardEntity senderCardEntity, CardEntity receiverCardEntity, Long sum) throws CardNotActiveException, TransactionFailedException {
