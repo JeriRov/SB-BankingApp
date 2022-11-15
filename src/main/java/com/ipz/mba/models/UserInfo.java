@@ -1,9 +1,8 @@
 package com.ipz.mba.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
-public class UserInfo {
-    private final String firstName;
-    private final String lastName;
-}
+@Getter
+public record UserInfo(String firstName, String lastName) { }
