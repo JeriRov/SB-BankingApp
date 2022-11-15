@@ -11,6 +11,10 @@ import java.util.Set;
 
 public record CustomerDetails(CustomerEntity customer) implements UserDetails {
 
+    public CustomerEntity getCustomer() {
+        return customer;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authorities = new HashSet<>();

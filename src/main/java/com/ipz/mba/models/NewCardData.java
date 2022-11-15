@@ -11,12 +11,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ClientDataLogin {
-    private String ipn;
-    private String phoneNumber;
-    private String password;
-
-    public boolean isPhone() {
-        return phoneNumber != null;
-    }
+public class NewCardData {
+    private String currency = "UAH", provider = "Visa", type;
 }

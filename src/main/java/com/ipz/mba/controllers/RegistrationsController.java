@@ -10,7 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Map;
+import java.util.TimeZone;
+
 @Slf4j
 @RestController
 @RequestMapping("/register")
@@ -25,16 +30,32 @@ public class RegistrationsController {
     }
 
     @PostMapping
-    public Map<String, String> register(@RequestBody ClientDataRegistration clientData) {
-        String jwtToken;
+    public Map<String, String> register(@RequestBody ClientDataRegistration cdr) {
+        var formatter = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
+        String newAccessToken, newRefreshToken;
+
         try {
-            log.info("LOG: " + clientData);
-            registrationService.saveData(clientData);
-            jwtToken = jwtUtil.generateToken(clientData.getPhoneNumber() != null ?
-                    clientData.getPhoneNumber() : clientData.getIpn());
+            log.info("LOG: " + cdr);
+            newRefreshToken = jwtUtil.generateRefreshToken(cdr.getPhoneNumber(), cdr.getIpn());
+
+            registrationService.saveData(cdr, newRefreshToken);
+
+            newAccessToken = jwtUtil.generateAccessToken(cdr.getIpn());
         } catch (Exception ex) {
             return Map.of("error", ex.getMessage());
         }
-        return Map.of("jwt", jwtToken);
+
+        Date refreshExpireDate = jwtUtil.getExpireDate(newRefreshToken, false);
+        Date accessExpireDate = jwtUtil.getExpireDate(newAccessToken, true);
+
+        TimeZone tz = TimeZone.getDefault();
+        String offsetId = tz.toZoneId().getRules().getStandardOffset(Instant.now()).getId();
+
+        return Map.of(
+                "refresh_token", newRefreshToken,
+                "refresh_expire_date", formatter.format(refreshExpireDate) + offsetId,
+                "access_token", newAccessToken,
+                "access_expire_date", formatter.format(accessExpireDate) + offsetId
+        );
     }
 }

@@ -42,11 +42,11 @@ public class JWTFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (authHeader != null && authHeader.startsWith(BEARER)) {
-            String jwtToken = authHeader.substring(BEARER.length()).trim();
-            log.info("jwt is {}", jwtToken);
+            String jwt = authHeader.substring(BEARER.length()).trim();
+            log.info("jwt is {}", jwt);
             try {
                 // here we`ll have phoneNumber or ipn
-                String data = jwtUtil.validateToken(jwtToken);
+                String data = jwtUtil.validateAccessToken(jwt);
 
                 // search customer by phoneNumber at first, and then by ipn
                 UserDetails userDetailsSearchedByPhone = customerDetailsService.loadUserByUsername(data);
@@ -65,18 +65,17 @@ public class JWTFilter extends OncePerRequestFilter {
                 if (SecurityContextHolder.getContext().getAuthentication() == null) {
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
-                filterChain.doFilter(request, response);
 
             } catch (JWTVerificationException ex) {
-                createResponse(response, ex, jwtToken);
+                createResponse(response, ex, jwt);
             }
         }
         filterChain.doFilter(request, response);
     }
 
-    private void createResponse(HttpServletResponse response, Exception ex, String jwtToken) throws IOException {
+    private void createResponse(HttpServletResponse response, Exception ex, String jwt) throws IOException {
         log.error("jwt JWTVerificationException");
-        log.error("jwt {}", jwtToken);
+        log.error("jwt {}", jwt);
         response.setHeader("error", "Invalid JWT");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
