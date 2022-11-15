@@ -246,7 +246,7 @@ return "error": "bad ipn"
 
 ## Transactions
 
-**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/transfer`
+**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/transactions/new`
 
 **Method:** Post
 

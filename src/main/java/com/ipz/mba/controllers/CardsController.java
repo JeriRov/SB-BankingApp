@@ -28,28 +28,6 @@ public class CardsController {
         this.cardService = cardService;
     }
 
-
-    @PostMapping("/transfer")
-    public ResponseEntity<Map<String, String>> performTransaction(@RequestBody TransferRequestData data) {
-        log.info("AccountsController: performTransaction(data)");
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        CustomerEntity customer = ((CustomerDetails) auth.getPrincipal()).getCustomer();
-
-        try {
-            log.info(data.toString());
-            if (!TransferRequestData.isValid(data)) {
-                throw new Exception("transfer data is not valid");
-            }
-            cardService.performTransaction(customer, data);
-
-            return ResponseEntity.ok(Map.of("message", "success"));
-        } catch (Exception ex) {
-            log.error("performTransaction(data): {}", ex.getMessage());
-            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
-        }
-    }
-
     @PostMapping(path = "/newcard")
     public Map<String, String> newCard(@RequestBody NewCardData ncd) {
         if(!Validation.checkNewCardData(ncd))
