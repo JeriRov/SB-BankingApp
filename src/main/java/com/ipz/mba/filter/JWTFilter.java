@@ -80,7 +80,7 @@ public class JWTFilter extends OncePerRequestFilter {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         var error = new HashMap<>();
-        error.put("errorMessage", ex.getMessage());
+        error.put("error", ex.getMessage());
         new ObjectMapper().writeValue(response.getOutputStream(), error);
     }
 }
