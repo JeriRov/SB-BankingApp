@@ -312,7 +312,7 @@ return "error": "bad ipn"
 
 **Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/transactions/all`
 
-**Method:** Post
+**Method:** Get
 
 **Headers**
 
