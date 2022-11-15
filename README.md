@@ -20,7 +20,7 @@ This project was created for the Mobile Banking App.
 **Raw body example:**
 
 `Old passport format: 2 letters and 6 numbers`
-```
+```json
 {
     "firstName": "name",
     "lastName": "surname",
@@ -31,7 +31,7 @@ This project was created for the Mobile Banking App.
 }
 ```
 `2016 passport format: 13 numbers`
-```
+```json
 {
     "firstName": "name",
     "lastName": "surname",
@@ -42,7 +42,7 @@ This project was created for the Mobile Banking App.
 }
 ```
 `2020 passport format: 9 numbers`
-```
+```json
 {
     "firstName": "name",
     "lastName": "surname",
@@ -54,7 +54,7 @@ This project was created for the Mobile Banking App.
 ```
 **Response body example:**
 
-```
+```json
 {
     "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiMDI5MTExMTgwOSIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjgzNDc1NTIsImlhdCI6MTY2ODM0Mzk1Mn0.P0HA4LwqqhZyW9bexmRNcYipMYPbzRnrAq_ZogOXDvk",
     "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNQkEiLCJwaG9uZU51bWJlciI6IiszODA1MDAzNTEwMzciLCJpcG4iOiIwMjkxMTExODA5IiwiaXNzIjoiTUJBX0lzc3VlciIsImV4cCI6MTY3MDkzNTk1MiwiaWF0IjoxNjY4MzQzOTUyfQ.6X8TuQYIsU2n0i-CCv8lx7Tpq8O0AnswcZaUgwdlyDw",
@@ -65,7 +65,7 @@ This project was created for the Mobile Banking App.
 
 **Response body example in case when not all data is received:**
 
-```
+```json
 {
     "error": "Client-data has null fields"
 }
@@ -73,7 +73,7 @@ This project was created for the Mobile Banking App.
 
 **Response body example in case when such ipn already exists:**
 
-```
+```json
 {
     "error": "User with such ipn already exists."
 }
@@ -81,7 +81,7 @@ This project was created for the Mobile Banking App.
 
 **Response body example in case when such phone-number already exists:**
 
-```
+```json
 {
     "error": "User with such phone-number already exists."
 }
@@ -89,7 +89,7 @@ This project was created for the Mobile Banking App.
 
 **Response body example in case when such passport-number already exists:**
 
-```
+```json
 {
     "error": "User with such passport-number already exists."
 }
@@ -97,7 +97,7 @@ This project was created for the Mobile Banking App.
 
 **Response body example in case when ipn length do not equal 10:**
 
-```
+```json
 {
     "error": "bad ipn"
 }
@@ -105,7 +105,7 @@ This project was created for the Mobile Banking App.
 
 **Response body example in case when phone-number is in incorrect format:**
 
-```
+```json
 {
     "error": "bad phone number"
 }
@@ -113,7 +113,7 @@ This project was created for the Mobile Banking App.
 
 **Response body example in case when passport-number is in incorrect format:**
 
-```
+```json
 {
     "error": "bad passport number"
 }
@@ -133,7 +133,7 @@ This project was created for the Mobile Banking App.
 
 Through a **phone number**:
 
-```
+```json
 {
     "phoneNumber": "+38010101010",
     "password": "examplePassword"
@@ -149,7 +149,7 @@ checks operator's codes
 
 Through an **identification code**:
 
-```
+```json
 {
     "phoneNumber": "5291807314",
     "password": "examplePassword"
@@ -163,7 +163,7 @@ return "error": "bad ipn"
 
 **Response body example:**
 
-```
+```json
 {
     "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNQkEiLCJwaG9uZU51bWJlciI6IiszODA1MDEzOTc4MzAiLCJpcG4iOiIxMjM4NTAwMDAiLCJpc3MiOiJNQkFfSXNzdWVyIiwiZXhwIjoxNjcwOTM2MTYyLCJpYXQiOjE2NjgzNDQxNjJ9.pPACQ94iMxuVhhu48wU7NoH_KjrFnJu3lPC4qK5gzsA",
     "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiKzM4MDUwMTM5NzgzMCIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjgzNDc3NjIsImlhdCI6MTY2ODM0NDE2Mn0.Iwx3fBUbI7zXdc6TgYT68Ngp4VL4opGqc0sXGym-b4s",
@@ -192,7 +192,7 @@ return "error": "bad ipn"
 
 **Raw body example:**
 
-```
+```json
 {
     "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNQkEiLCJwaG9uZU51bWJlciI6IiszODA1MDAzNTEwMzciLCJpcG4iOiIwMjkxMTExODA5IiwiaXNzIjoiTUJBX0lzc3VlciIsImV4cCI6MTY3MDkzNjAxOSwiaWF0IjoxNjY4MzQ0MDE5fQ.47FW4SGRVQx9bRsvDNsmHFUpuwiP8NhzQdc83QMiCq4"
 }
@@ -200,7 +200,7 @@ return "error": "bad ipn"
 
 **Response body example:**
 
-```
+```json
 {
     "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNQkEiLCJwaG9uZU51bWJlciI6IiszODA1MDEzOTc4MzAiLCJpcG4iOiIxMjM4NTAwMDAiLCJpc3MiOiJNQkFfSXNzdWVyIiwiZXhwIjoxNjcwOTM2MTYyLCJpYXQiOjE2NjgzNDQxNjJ9.pPACQ94iMxuVhhu48wU7NoH_KjrFnJu3lPC4qK5gzsA",
     "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiKzM4MDUwMTM5NzgzMCIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjgzNDc3NjIsImlhdCI6MTY2ODM0NDE2Mn0.Iwx3fBUbI7zXdc6TgYT68Ngp4VL4opGqc0sXGym-b4s",
@@ -211,7 +211,7 @@ return "error": "bad ipn"
 
 **Response body example in case when such refresh token is not found in DB:**
 
-```
+```json
 {
     "error": "user with such refresh-token was not found"
 }
@@ -228,7 +228,7 @@ return "error": "bad ipn"
 
 **Raw body example:**
 
-```
+```json
 {
     "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNQkEiLCJwaG9uZU51bWJlciI6IiszODA1MDAzNTEwMzciLCJpcG4iOiIwMjkxMTExODA5IiwiaXNzIjoiTUJBX0lzc3VlciIsImV4cCI6MTY3MDkzNjAxOSwiaWF0IjoxNjY4MzQ0MDE5fQ.47FW4SGRVQx9bRsvDNsmHFUpuwiP8NhzQdc83QMiCq4"
 }
@@ -236,7 +236,7 @@ return "error": "bad ipn"
 
 **Response body example:**
 
-```
+```json
 {
     "success": "logout"
 }
@@ -428,37 +428,37 @@ return "error": "bad ipn"
 
 **Response body examples:**
 
-```
+```json
 {
     "message": "success"
 }
 ```
 
-```
+```json
 {
     "error": "sender do not have that card"
 }
 ```
 
-```
+```json
 {
     "error": "receiver card was not found"
 }
 ```
 
-```
+```json
 {
     "error": "limit is lower than specified sum"
 }
 ```
 
-```
+```json
 {
     "error": "not enough money on the card"
 }
 ```
 
-```
+```json
 {
     "error": "transfer data is not valid"
 }
