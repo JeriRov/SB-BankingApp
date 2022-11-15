@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface TransactionRepository extends CrudRepository<TransactionEntity, Long> {
-    Optional<List<TransactionEntity>> findAllBySenderCardNumber(String cardNumber);
+    List<TransactionEntity> findAllBySenderCardNumberOrReceiverCardNumber(String senderCardNumber, String receiverCardNumber);
 }
