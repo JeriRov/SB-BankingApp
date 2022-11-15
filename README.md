@@ -99,7 +99,7 @@ This project was created for the Mobile Banking App.
 
 ```json
 {
-    "error": "bad ipn"
+    "error": "Bad ipn"
 }
 ```
 
@@ -107,7 +107,7 @@ This project was created for the Mobile Banking App.
 
 ```json
 {
-    "error": "bad phone number"
+    "error": "Bad phone number"
 }
 ```
 
@@ -115,7 +115,7 @@ This project was created for the Mobile Banking App.
 
 ```json
 {
-    "error": "bad passport number"
+    "error": "Bad passport number"
 }
 ```
 
@@ -145,7 +145,7 @@ checks is it ukrainian number
 checks length of number
 checks operator's codes
 ```
-"error": "bad phone number"
+"error": "Bad phone number"
 
 Through an **identification code**:
 
@@ -159,7 +159,7 @@ Validation:
 ```
 checks ipn length
 ```
-return "error": "bad ipn"
+return "error": "Bad ipn"
 
 **Response body example:**
 
@@ -213,7 +213,7 @@ return "error": "bad ipn"
 
 ```json
 {
-    "error": "user with such refresh-token was not found"
+    "error": "User with such refresh-token was not found"
 }
 ```
 
@@ -238,7 +238,7 @@ return "error": "bad ipn"
 
 ```json
 {
-    "success": "logout"
+    "Success": "logout"
 }
 ```
 
@@ -397,7 +397,7 @@ return "error": "bad ipn"
 
 ```json
 {
-    "error": "invalid data"
+    "error": "Invalid data"
 }
 ```
 
@@ -430,37 +430,37 @@ return "error": "bad ipn"
 
 ```json
 {
-    "message": "success"
+    "message": "Success"
 }
 ```
 
 ```json
 {
-    "error": "sender do not have that card"
+    "error": "Sender do not have that card"
 }
 ```
 
 ```json
 {
-    "error": "receiver card was not found"
+    "error": "Receiver card was not found"
 }
 ```
 
 ```json
 {
-    "error": "limit is lower than specified sum"
+    "error": "Limit is lower than specified sum"
 }
 ```
 
 ```json
 {
-    "error": "not enough money on the card"
+    "error": "Not enough money on the card"
 }
 ```
 
 ```json
 {
-    "error": "transfer data is not valid"
+    "error": "Transfer data is not valid"
 }
 ```
 ---

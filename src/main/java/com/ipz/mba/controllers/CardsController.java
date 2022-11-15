@@ -34,7 +34,7 @@ public class CardsController {
     @PostMapping(path = "/new")
     public Map<String, String> newCard(@RequestBody NewCardData ncd) {
         if(!Validation.checkNewCardData(ncd))
-            return Map.of("error", "invalid data");
+            return Map.of("error", "Invalid data");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomerEntity customer = ((CustomerDetails) auth.getPrincipal()).getCustomer();
         return Map.of("new card", cardService.createCard(

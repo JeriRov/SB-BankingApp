@@ -37,7 +37,7 @@ public class RefreshController {
         }
 
         if (refreshTokenService.isUserPresentWithRefreshToken(phoneNumber, body.getRefreshToken()) == null) {
-            return Map.of("error", "user with such refresh-token was not found");
+            return Map.of("error", "User with such refresh-token was not found");
         }
 
         return jwtUtil.getTokensAndExpireDates(phoneNumber, refreshTokenService);
@@ -54,12 +54,12 @@ public class RefreshController {
 
         UserEntity user = refreshTokenService.isUserPresentWithRefreshToken(phoneNumber, body.getRefreshToken());
         if (user == null) {
-            return Map.of("error", "user with such refresh-token was not found");
+            return Map.of("error", "User with such refresh-token was not found");
         }
 
         refreshTokenService.updateRefreshToken(user, null);
 
-        return Map.of("success", "logout");
+        return Map.of("Success", "logout");
     }
 
 }
