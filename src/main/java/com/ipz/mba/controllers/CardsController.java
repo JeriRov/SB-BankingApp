@@ -15,11 +15,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/user/cards")
 public class CardsController {
     private final CardService cardService;
 
@@ -28,7 +29,7 @@ public class CardsController {
         this.cardService = cardService;
     }
 
-    @PostMapping(path = "/newcard")
+    @PostMapping(path = "/new")
     public Map<String, String> newCard(@RequestBody NewCardData ncd) {
         if(!Validation.checkNewCardData(ncd))
             return Map.of("error", "invalid data");
@@ -36,5 +37,12 @@ public class CardsController {
         CustomerEntity customer = ((CustomerDetails) auth.getPrincipal()).getCustomer();
         return Map.of("new card", cardService.createCard(
                 ncd.getProvider(), customer, ncd.getType(), ncd.getCurrency()).getCardNumber());
+    }
+
+    @GetMapping(path = "/")
+    public Map<String, List<CardEntity>> allCards(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomerEntity customer = ((CustomerDetails) auth.getPrincipal()).getCustomer();
+        return Map.of("ok",cardService.getAllCards(customer.getId()));
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -116,6 +117,10 @@ public class CardServiceImpl implements CardService {
         CardEntity card = cardGenerator.createCard(provider, customer, type, currency, count);
         cardRepository.save(card);
         return card;
+    }
+
+    public List<CardEntity> getAllCards(long ownerId){
+        return cardRepository.findCardEntitiesByOwnerId(ownerId);
     }
 
     private void validateAll(CardEntity senderCardEntity, CardEntity receiverCardEntity, Long sum) throws CardNotActiveException, TransactionFailedException {
