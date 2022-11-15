@@ -31,7 +31,7 @@ public class CardGenerator {
         card.setProviderEntity(provider);
         card.setCurrencyName(currency);
         card.setSum(new BigDecimal(0));
-        card.setSumLimit(0);
+        card.setSumLimit(10_000);
         card.setIsBlocked(false);
         return card;
     }
