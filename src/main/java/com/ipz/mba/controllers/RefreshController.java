@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 
 @RestController
@@ -59,7 +57,7 @@ public class RefreshController {
 
         refreshTokenService.updateRefreshToken(user, null);
 
-        return Map.of("Success", "logout");
+        return Map.of("success", "Logout");
     }
 
 }

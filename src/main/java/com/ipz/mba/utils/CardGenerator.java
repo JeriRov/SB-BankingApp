@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class CardGenerator {
 
-    private Random rand;
+    private final Random rand;
 
     public CardGenerator() {
         rand = new Random();
@@ -63,10 +63,11 @@ public class CardGenerator {
     public int luhn(String number) {
         int sum = 0;
         for (int i = 0; i < number.length(); i++) {
+            int parseInt = Integer.parseInt(number.substring(i, i + 1));
             if (i % 2 == 1) {
-                sum = sum + Integer.parseInt(number.substring(i, i + 1));
+                sum = sum + parseInt;
             } else {
-                int add = Integer.parseInt(number.substring(i, i + 1)) * 2;
+                int add = parseInt * 2;
                 if (add > 9) add = add % 10 + 1;
                 sum += add;
             }

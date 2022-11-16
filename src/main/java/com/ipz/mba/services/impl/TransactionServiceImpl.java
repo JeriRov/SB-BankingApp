@@ -29,12 +29,10 @@ public class TransactionServiceImpl implements TransactionService {
         log.info("TransactionService: getAllUserTransactions(customer)");
         Set<RecentTransactionInfo> transactions = new LinkedHashSet<>();
 
-        customer.getCards().forEach(card -> {
-            transactionRepository.findAllBySenderCardNumberOrReceiverCardNumber(
-                    card.getCardNumber(),
-                    card.getCardNumber()
-            ).forEach(t -> transactions.add(RecentTransactionInfo.get(card, t)));
-        });
+        customer.getCards().forEach(card -> transactionRepository.findAllBySenderCardNumberOrReceiverCardNumber(
+                card.getCardNumber(),
+                card.getCardNumber()
+        ).forEach(t -> transactions.add(RecentTransactionInfo.get(card, t))));
 
         // sort by time
         List<RecentTransactionInfo> list = new ArrayList<>(transactions);
