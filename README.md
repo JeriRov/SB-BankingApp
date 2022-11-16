@@ -11,6 +11,8 @@ This project was created for the Mobile Banking App.
 
 ## Registration
 
+<details>
+
 **Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/register`
 
 **Method:** Post
@@ -118,10 +120,12 @@ This project was created for the Mobile Banking App.
     "error": "Bad passport number"
 }
 ```
+</details>
 
----
 
 ## Login
+
+<details>
 
 **Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/login`
 
@@ -171,10 +175,12 @@ return "error": "Bad ipn"
     "refresh_expire_date": "14-12-2022 21:27:30+02:00"
 }
 ```
+</details>
 
----
 
 ## Work with jwt
+
+<details>
 
 **Headers**
 
@@ -216,10 +222,13 @@ return "error": "Bad ipn"
     "error": "User with such refresh-token was not found"
 }
 ```
-
+</details>
 ---
 
 ## Log out
+
+<details>
+
 **Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/refresh_token/logout`
 
 **Method:** Post
@@ -238,13 +247,15 @@ return "error": "Bad ipn"
 
 ```json
 {
-    "Success": "logout"
+    "success": "logout"
 }
 ```
-
+</details>
 ---
 
 ## Get user info
+
+<details>
 
 **Method:** Get
 
@@ -263,10 +274,12 @@ return "error": "Bad ipn"
     "lastName": "Mostavchuk"
 }
 ```
-
+</details>
 ---
 
 ## Get all cards 
+
+<details>
 
 **Method:** Get
 
@@ -325,8 +338,11 @@ return "error": "Bad ipn"
     ]
 }
 ```
+</details>
 
 ## Get card by number
+
+<details>
 
 **Method:** Get
 
@@ -363,8 +379,13 @@ return "error": "Bad ipn"
     }
 }
 ```
+</details>
+
+
 
 ## Create new card
+
+<details>
 
 **Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/cards/new`
 
@@ -401,7 +422,11 @@ return "error": "Bad ipn"
 }
 ```
 
+</details>
+
 ## Do transactions
+
+<details>
 
 **Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/transactions/new`
 
@@ -463,9 +488,13 @@ return "error": "Bad ipn"
     "error": "Transfer data is not valid"
 }
 ```
----
+
+</details>
+
 
 ## Get all user transactions
+
+<details>
 
 **Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/transactions/all`
 
@@ -500,3 +529,4 @@ return "error": "Bad ipn"
     }
 ]
 ```
+</details>
