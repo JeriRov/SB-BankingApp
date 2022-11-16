@@ -1,4 +1,4 @@
-package com.ipz.mba.filter;
+package com.ipz.mba.security.filter;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.fasterxml.jackson.databind.ObjectMapper;

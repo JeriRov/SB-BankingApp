@@ -26,7 +26,6 @@ public class CardServiceImpl implements CardService {
     private final int SCALE = 8;
     private final String UAH_CURRENCY_NAME = "UAH";
     private final CardRepository cardRepository;
-    private final CustomerRepository customerRepository;
     private final TransactionRepository transactionRepository;
     private final CurrencyRepository currencyRepository;
     private final CardTypeRepository cardTypeRepository;
@@ -39,7 +38,6 @@ public class CardServiceImpl implements CardService {
         this.cardRepository = cardRepository;
         this.transactionRepository = transactionRepository;
         this.currencyRepository = currencyRepository;
-        this.customerRepository = customerRepository;
         this.cardTypeRepository = cardTypeRepository;
         this.providerRepository = providerRepository;
     }
@@ -53,10 +51,10 @@ public class CardServiceImpl implements CardService {
         CardEntity senderCardEntity = senderEntity.getCards().stream()
                 .filter(card -> card.getCardNumber().equals(transferData.getSenderCardNumber()))
                 .findAny()
-                .orElseThrow(() -> new CardNotFoundException("sender do not have that card"));
+                .orElseThrow(() -> new CardNotFoundException("Sender do not have that card"));
 
         CardEntity receiverCardEntity = cardRepository.findByCardNumber(transferData.getReceiverCardNumber())
-                .orElseThrow(() -> new CardNotFoundException("receiver card was not found"));
+                .orElseThrow(() -> new CardNotFoundException("Receiver card was not found"));
 
 
         Long initialSum = transferData.getSum();
@@ -147,9 +145,9 @@ public class CardServiceImpl implements CardService {
         CardEntity.validate(receiverCardEntity);
 
         if (senderCardEntity.getSumLimit() < sum) {
-            throw new TransactionFailedException("limit is lower than specified sum");
+            throw new TransactionFailedException("Limit is lower than specified sum");
         } else if (senderCardEntity.getSum().compareTo(BigDecimal.valueOf(sum)) < 0) {
-            throw new TransactionFailedException("not enough money on the card");
+            throw new TransactionFailedException("Not enough money on the card");
         }
     }
 

@@ -91,7 +91,7 @@ public class JWTUtil {
         Date refreshExpireDate = getExpireDate(newRefreshToken, false);
         Date accessExpireDate = getExpireDate(newAccessToken, true);
 
-        var formatter = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
+        var formatter = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
         TimeZone tz = TimeZone.getDefault();
         String offsetId = tz.toZoneId().getRules().getStandardOffset(Instant.now()).getId();
 

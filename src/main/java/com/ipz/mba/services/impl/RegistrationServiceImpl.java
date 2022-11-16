@@ -42,11 +42,11 @@ public class RegistrationServiceImpl implements RegistrationService {
         if (ClientDataRegistration.hasNullFields(cdr)) {
             throw new ClientDataRegistrationHasNullFieldsException("Client-data has null fields");
         } else if (!Validation.checkIpn(cdr.getIpn())) {
-            throw new ClientDataRegistrationValidationException("bad ipn");
+            throw new ClientDataRegistrationValidationException("Bad ipn");
         } else if (!Validation.checkPhoneNumber(cdr.getPhoneNumber())) {
-            throw new ClientDataRegistrationValidationException("bad phone number");
+            throw new ClientDataRegistrationValidationException("Bad phone number");
         } else if (!Validation.checkPassportNumber(cdr.getPassportNumber())) {
-            throw new ClientDataRegistrationValidationException("bad passport number");
+            throw new ClientDataRegistrationValidationException("Bad passport number");
         }
         // if phone-number is present in DB
         else if (usersRepository.findUserByPhoneNumber(cdr.getPhoneNumber()).isPresent()) {

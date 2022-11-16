@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 
 @Slf4j
@@ -38,13 +38,13 @@ public class LoginController {
             log.info("LOG: Try to log in via phone {}", cdl.getPhoneNumber());
             number = cdl.getPhoneNumber();
             if (!Validation.checkPhoneNumber(number)) {
-                return Map.of("error", "bad phone number");
+                return Map.of("error", "Bad phone number");
             }
         } else {
             log.info("LOG: Try to log in via ipn {}", cdl.getIpn());
             number = cdl.getIpn();
             if (!Validation.checkIpn(number)) {
-                return Map.of("error", "bad ipn");
+                return Map.of("error", "Bad ipn");
             }
         }
 
@@ -52,7 +52,7 @@ public class LoginController {
         try {
             authManager.authenticate(authToken);
         } catch (BadCredentialsException ex) {
-            return Map.of("error", "bad credentials");
+            return Map.of("error", "Bad credentials");
         }
 
         return jwtUtil.getTokensAndExpireDates(number, refreshTokenService);

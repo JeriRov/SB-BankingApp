@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 
 @RestController
@@ -37,7 +35,7 @@ public class RefreshController {
         }
 
         if (refreshTokenService.isUserPresentWithRefreshToken(phoneNumber, body.getRefreshToken()) == null) {
-            return Map.of("error", "user with such refresh-token was not found");
+            return Map.of("error", "User with such refresh-token was not found");
         }
 
         return jwtUtil.getTokensAndExpireDates(phoneNumber, refreshTokenService);
@@ -54,12 +52,12 @@ public class RefreshController {
 
         UserEntity user = refreshTokenService.isUserPresentWithRefreshToken(phoneNumber, body.getRefreshToken());
         if (user == null) {
-            return Map.of("error", "user with such refresh-token was not found");
+            return Map.of("error", "User with such refresh-token was not found");
         }
 
         refreshTokenService.updateRefreshToken(user, null);
 
-        return Map.of("success", "logout");
+        return Map.of("success", "Logout");
     }
 
 }

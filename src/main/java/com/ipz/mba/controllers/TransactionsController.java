@@ -40,11 +40,11 @@ public class TransactionsController {
         try {
             log.info(data.toString());
             if (!TransferRequestData.isValid(data)) {
-                throw new Exception("transactions data is not valid");
+                throw new Exception("Transactions data is not valid");
             }
             cardService.performTransaction(customer, data);
 
-            return ResponseEntity.ok(Map.of("message", "success"));
+            return ResponseEntity.ok(Map.of("message", "Success"));
         } catch (Exception ex) {
             log.error("performTransaction(data): {}", ex.getMessage());
             return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
