@@ -223,7 +223,6 @@ return "error": "Bad ipn"
 }
 ```
 </details>
----
 
 ## Log out
 
@@ -251,7 +250,6 @@ return "error": "Bad ipn"
 }
 ```
 </details>
----
 
 ## Get user info
 
@@ -275,7 +273,6 @@ return "error": "Bad ipn"
 }
 ```
 </details>
----
 
 ## Get all cards 
 
