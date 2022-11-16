@@ -421,6 +421,40 @@ return "error": "Bad ipn"
 
 </details>
 
+## Change pin code
+
+<details>
+
+**Method:** Get
+
+**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/cards/change/pin/{cardNumber}`
+
+**Headers**
+
+    Key: Authorization
+    Value: Bearer eyJ0eXAiOiJ141QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiNTI5MTgwNzMxMSIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjY1MjkzNzQsI4lhdCI6MTY2NjUyNTc3NH0.NkgoKCYJrJXXT23MH0SFeHBTsUJsBOl2DENSY_NRc94
+
+**Response body examples:**
+
+```json
+{
+    "ok": "5964"
+}
+```
+
+```json
+{
+    "error": "Wrong number"
+}
+```
+
+```json
+{
+    "error": "Wrong owner"
+}
+```
+</details>
+
 ## Do transactions
 
 <details>

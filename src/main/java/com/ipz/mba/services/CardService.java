@@ -8,6 +8,7 @@ import com.ipz.mba.exceptions.TransactionFailedException;
 import com.ipz.mba.models.TransferRequestData;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface CardService {
@@ -19,4 +20,6 @@ public interface CardService {
     List<CardEntity> getAllCards(long ownerId);
 
     Optional<CardEntity> getCard(String number);
+
+    Map<String,String> changePin(String number, long ownerId);
 }

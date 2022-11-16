@@ -54,7 +54,7 @@ public class CardGenerator {
         return result.toString();
     }
 
-    private String generatePin() {
+    public String generatePin() {
         StringBuilder result = new StringBuilder(String.valueOf(Math.abs(rand.nextInt()) % 10000));
         while (result.length() < 4) result.insert(0, "0");
         return result.toString();

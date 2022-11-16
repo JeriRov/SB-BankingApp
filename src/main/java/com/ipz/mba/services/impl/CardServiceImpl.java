@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -124,6 +125,19 @@ public class CardServiceImpl implements CardService {
 
     public Optional<CardEntity> getCard(String number){
         return cardRepository.findByCardNumber(number);
+    }
+
+    public Map<String,String> changePin(String number, long ownerId){
+        Optional<CardEntity> card = getCard(number);
+        if(card.isEmpty())
+            return Map.of("error","Card not found");
+        if(ownerId != card.get().getOwner().getId())
+            return Map.of("error","Wrong owner");
+        CardGenerator cardGenerator = new CardGenerator();
+        String pin = cardGenerator.generatePin();
+        card.get().setPinCode(pin);
+        cardRepository.save(card.get());
+        return Map.of("ok", pin);
     }
 
     private void validateAll(CardEntity senderCardEntity, CardEntity receiverCardEntity, Long sum) throws CardNotActiveException, TransactionFailedException {

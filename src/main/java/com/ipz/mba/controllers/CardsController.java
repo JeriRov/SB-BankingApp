@@ -56,4 +56,13 @@ public class CardsController {
             return Map.of("card not found", new CardEntity());
         return Map.of("ok", card.get());
     }
+
+    @GetMapping(path = "/change/pin/{cardNumber}")
+    public Map<String, String> changePin(@PathVariable  String cardNumber) {
+        if (!Validation.checkCardByLuhn(cardNumber))
+            return Map.of("error", "Wrong number");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomerEntity customer = ((CustomerDetails) auth.getPrincipal()).getCustomer();
+        return cardService.changePin(cardNumber, customer.getId());
+    }
 }
