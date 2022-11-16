@@ -3,6 +3,7 @@ package com.ipz.mba.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -32,11 +33,15 @@ public class TransactionEntity {
     @Column(name = "sum")
     private Long sum;
 
-    public TransactionEntity(String senderCardNumber, String receiverCardNumber, String purpose, ZonedDateTime time, Long sum) {
+    @Column(name = "converted_sum")
+    private BigDecimal convertedSum;
+
+    public TransactionEntity(String senderCardNumber, String receiverCardNumber, String purpose, ZonedDateTime time, Long sum, BigDecimal convertedSum) {
         this.senderCardNumber = senderCardNumber;
         this.receiverCardNumber = receiverCardNumber;
         this.purpose = purpose;
         this.time = time;
         this.sum = sum;
+        this.convertedSum = convertedSum;
     }
 }

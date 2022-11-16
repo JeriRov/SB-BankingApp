@@ -5,6 +5,7 @@ import com.ipz.mba.entities.TransactionEntity;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
@@ -15,10 +16,10 @@ public class RecentTransactionInfo {
     private final String provider;
     private final String currency;
     private final ZonedDateTime time;
-    private final long sum;
+    private final BigDecimal sum;
     private final boolean profit;
 
-    private RecentTransactionInfo(long id, String provider, String currency, ZonedDateTime time, long sum, boolean profit) {
+    private RecentTransactionInfo(long id, String provider, String currency, ZonedDateTime time, BigDecimal sum, boolean profit) {
         this.id = id;
         this.provider = provider;
         this.currency = currency;
@@ -34,7 +35,7 @@ public class RecentTransactionInfo {
                 card.getProviderEntity().getProviderName(),
                 card.getCurrencyName(),
                 transaction.getTime(),
-                transaction.getSum(),
+                transaction.getSenderCardNumber().equals(card.getCardNumber()) ? BigDecimal.valueOf(transaction.getSum()) : transaction.getConvertedSum(),
                 card.getCardNumber().equals(transaction.getReceiverCardNumber())
         );
     }

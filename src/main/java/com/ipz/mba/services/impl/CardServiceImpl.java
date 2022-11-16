@@ -77,7 +77,8 @@ public class CardServiceImpl implements CardService {
                 receiverCardEntity.getCardNumber(),
                 transferData.getPurpose(),
                 ZonedDateTime.now(),
-                transferData.getSum()
+                transferData.getSum(),
+                convertedSum
         );
 
         // saving all
