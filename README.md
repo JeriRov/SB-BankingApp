@@ -11,6 +11,8 @@ This project was created for the Mobile Banking App.
 
 ## Registration
 
+<details>
+
 **Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/register`
 
 **Method:** Post
@@ -99,7 +101,7 @@ This project was created for the Mobile Banking App.
 
 ```json
 {
-    "error": "bad ipn"
+    "error": "Bad ipn"
 }
 ```
 
@@ -107,7 +109,7 @@ This project was created for the Mobile Banking App.
 
 ```json
 {
-    "error": "bad phone number"
+    "error": "Bad phone number"
 }
 ```
 
@@ -115,13 +117,15 @@ This project was created for the Mobile Banking App.
 
 ```json
 {
-    "error": "bad passport number"
+    "error": "Bad passport number"
 }
 ```
+</details>
 
----
 
 ## Login
+
+<details>
 
 **Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/login`
 
@@ -145,7 +149,7 @@ checks is it ukrainian number
 checks length of number
 checks operator's codes
 ```
-"error": "bad phone number"
+"error": "Bad phone number"
 
 Through an **identification code**:
 
@@ -159,7 +163,7 @@ Validation:
 ```
 checks ipn length
 ```
-return "error": "bad ipn"
+return "error": "Bad ipn"
 
 **Response body example:**
 
@@ -171,10 +175,12 @@ return "error": "bad ipn"
     "refresh_expire_date": "14-12-2022 21:27:30+02:00"
 }
 ```
+</details>
 
----
 
 ## Work with jwt
+
+<details>
 
 **Headers**
 
@@ -213,13 +219,15 @@ return "error": "bad ipn"
 
 ```json
 {
-    "error": "user with such refresh-token was not found"
+    "error": "User with such refresh-token was not found"
 }
 ```
-
----
+</details>
 
 ## Log out
+
+<details>
+
 **Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/refresh_token/logout`
 
 **Method:** Post
@@ -241,10 +249,11 @@ return "error": "bad ipn"
     "success": "logout"
 }
 ```
-
----
+</details>
 
 ## Get user info
+
+<details>
 
 **Method:** Get
 
@@ -263,10 +272,11 @@ return "error": "bad ipn"
     "lastName": "Mostavchuk"
 }
 ```
-
----
+</details>
 
 ## Get all cards 
+
+<details>
 
 **Method:** Get
 
@@ -325,8 +335,11 @@ return "error": "bad ipn"
     ]
 }
 ```
+</details>
 
 ## Get card by number
+
+<details>
 
 **Method:** Get
 
@@ -363,8 +376,13 @@ return "error": "bad ipn"
     }
 }
 ```
+</details>
+
+
 
 ## Create new card
+
+<details>
 
 **Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/cards/new`
 
@@ -397,11 +415,15 @@ return "error": "bad ipn"
 
 ```json
 {
-    "error": "invalid data"
+    "error": "Invalid data"
 }
 ```
 
+</details>
+
 ## Do transactions
+
+<details>
 
 **Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/transactions/new`
 
@@ -430,42 +452,46 @@ return "error": "bad ipn"
 
 ```json
 {
-    "message": "success"
+    "message": "Success"
 }
 ```
 
 ```json
 {
-    "error": "sender do not have that card"
+    "error": "Sender do not have that card"
 }
 ```
 
 ```json
 {
-    "error": "receiver card was not found"
+    "error": "Receiver card was not found"
 }
 ```
 
 ```json
 {
-    "error": "limit is lower than specified sum"
+    "error": "Limit is lower than specified sum"
 }
 ```
 
 ```json
 {
-    "error": "not enough money on the card"
+    "error": "Not enough money on the card"
 }
 ```
 
 ```json
 {
-    "error": "transfer data is not valid"
+    "error": "Transfer data is not valid"
 }
 ```
----
+
+</details>
+
 
 ## Get all user transactions
+
+<details>
 
 **Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/transactions/all`
 
@@ -500,3 +526,4 @@ return "error": "bad ipn"
     }
 ]
 ```
+</details>
