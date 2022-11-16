@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -27,7 +24,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<RecentTransactionInfo> getAllUserTransactions(CustomerEntity customer) {
         log.info("TransactionService: getAllUserTransactions(customer)");
-        Set<RecentTransactionInfo> transactions = new LinkedHashSet<>();
+        List<RecentTransactionInfo> transactions = new LinkedList<>();
 
         customer.getCards().forEach(card -> transactionRepository.findAllBySenderCardNumberOrReceiverCardNumber(
                 card.getCardNumber(),
@@ -35,10 +32,8 @@ public class TransactionServiceImpl implements TransactionService {
         ).forEach(t -> transactions.add(RecentTransactionInfo.get(card, t))));
 
         // sort by time
-        List<RecentTransactionInfo> list = new ArrayList<>(transactions);
-        list.sort((t1, t2) -> compareTime(t1.getTime(), t2.getTime()));
-
-        return list;
+        transactions.sort((t1, t2) -> compareTime(t1.getTime(), t2.getTime()));
+        return transactions;
     }
 
     private int compareTime(ZonedDateTime first, ZonedDateTime second) {
