@@ -427,7 +427,7 @@ return "error": "Bad ipn"
 
 **Method:** Get
 
-**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/cards/change/pin{cardNumber}`
+**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/cards/change/pin/{cardNumber}`
 
 **Headers**
 
