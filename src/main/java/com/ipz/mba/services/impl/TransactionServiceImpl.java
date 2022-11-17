@@ -32,7 +32,8 @@ public class TransactionServiceImpl implements TransactionService {
         ).forEach(t -> transactions.add(RecentTransactionInfo.get(card, t))));
 
         // sort by time
-        transactions.sort((t1, t2) -> compareTime(t1.getTime(), t2.getTime()));
+        transactions.sort(Collections.reverseOrder(RecentTransactionInfo::compareTo)
+                .thenComparing(RecentTransactionInfo::isProfit, Comparator.reverseOrder()));
         return transactions;
     }
 
