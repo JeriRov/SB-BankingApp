@@ -37,7 +37,4 @@ public class TransactionServiceImpl implements TransactionService {
         return transactions;
     }
 
-    private int compareTime(ZonedDateTime first, ZonedDateTime second) {
-        return first.isAfter(second) ? -1 : 1;
-    }
 }
