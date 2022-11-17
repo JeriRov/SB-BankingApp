@@ -39,7 +39,7 @@ public class CardGenerator {
     private String generateNumber(long provider, long count) {
         StringBuilder cardNumber;
         //BIN
-        if (provider == 1) {
+        if (provider == 2) {
             cardNumber = new StringBuilder("41520713");
         } else {
             cardNumber = new StringBuilder("51507213");
