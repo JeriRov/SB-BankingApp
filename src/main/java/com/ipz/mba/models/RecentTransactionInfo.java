@@ -11,7 +11,7 @@ import java.util.Objects;
 
 @Slf4j
 @Getter
-public class RecentTransactionInfo {
+public class RecentTransactionInfo implements Comparable<RecentTransactionInfo> {
     private final long id;
     private final String provider;
     private final String currency;
@@ -51,5 +51,10 @@ public class RecentTransactionInfo {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public int compareTo(RecentTransactionInfo o) {
+        return this.getTime().compareTo(o.getTime());
     }
 }
