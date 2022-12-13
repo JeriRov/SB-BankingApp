@@ -36,12 +36,17 @@ public class TransactionEntity {
     @Column(name = "converted_sum")
     private BigDecimal convertedSum;
 
-    public TransactionEntity(String senderCardNumber, String receiverCardNumber, String purpose, ZonedDateTime time, Long sum, BigDecimal convertedSum) {
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private CategoryEntity category;
+
+    public TransactionEntity(String senderCardNumber, String receiverCardNumber, String purpose, ZonedDateTime time, Long sum, BigDecimal convertedSum, CategoryEntity category) {
         this.senderCardNumber = senderCardNumber;
         this.receiverCardNumber = receiverCardNumber;
         this.purpose = purpose;
         this.time = time;
         this.sum = sum;
         this.convertedSum = convertedSum;
+        this.category = category;
     }
 }
