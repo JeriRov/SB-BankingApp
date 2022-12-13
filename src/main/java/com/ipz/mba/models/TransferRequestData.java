@@ -13,6 +13,7 @@ public class TransferRequestData {
     private String receiverName;
     private Long sum;
     private String purpose;
+    private String category;
 
     public static boolean isValid(TransferRequestData data) {
         return !(data.getSenderCardNumber() == null || data.getSenderCardNumber().isBlank() ||

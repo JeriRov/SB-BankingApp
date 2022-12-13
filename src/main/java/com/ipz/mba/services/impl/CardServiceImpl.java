@@ -3,6 +3,7 @@ package com.ipz.mba.services.impl;
 import com.ipz.mba.entities.*;
 import com.ipz.mba.exceptions.CardNotActiveException;
 import com.ipz.mba.exceptions.CardNotFoundException;
+import com.ipz.mba.exceptions.CategoryNotFoundException;
 import com.ipz.mba.exceptions.TransactionFailedException;
 import com.ipz.mba.models.TransferRequestData;
 import com.ipz.mba.repositories.*;
@@ -27,16 +28,18 @@ public class CardServiceImpl implements CardService {
     private final String UAH_CURRENCY_NAME = "UAH";
     private final CardRepository cardRepository;
     private final TransactionRepository transactionRepository;
+    private final CategoryRepository categoryRepository;
     private final CurrencyRepository currencyRepository;
     private final CardTypeRepository cardTypeRepository;
     private final ProviderRepository providerRepository;
 
     @Autowired
     public CardServiceImpl(CardRepository cardRepository, TransactionRepository transactionRepository,
-                           CurrencyRepository currencyRepository, CustomerRepository customerRepository,
+                           CategoryRepository categoryRepository, CurrencyRepository currencyRepository,
                            CardTypeRepository cardTypeRepository, ProviderRepository providerRepository) {
         this.cardRepository = cardRepository;
         this.transactionRepository = transactionRepository;
+        this.categoryRepository = categoryRepository;
         this.currencyRepository = currencyRepository;
         this.cardTypeRepository = cardTypeRepository;
         this.providerRepository = providerRepository;
@@ -44,7 +47,7 @@ public class CardServiceImpl implements CardService {
 
     @Transactional
     @Override
-    public void performTransaction(CustomerEntity senderEntity, TransferRequestData transferData) throws CardNotFoundException, CardNotActiveException, TransactionFailedException {
+    public void performTransaction(CustomerEntity senderEntity, TransferRequestData transferData) throws CardNotFoundException, CardNotActiveException, TransactionFailedException, CategoryNotFoundException {
         log.info("CardService: performTransaction(transferData)");
 
         // finding cards
@@ -56,13 +59,21 @@ public class CardServiceImpl implements CardService {
         CardEntity receiverCardEntity = cardRepository.findByCardNumber(transferData.getReceiverCardNumber())
                 .orElseThrow(() -> new CardNotFoundException("Receiver card was not found"));
 
+        // finding categories
+        if(transferData.getCategory() == null){
+            transferData.setCategory(categoryRepository.findCategoryEntityById(0)
+                    .orElseThrow(() -> new CategoryNotFoundException("Category was not found")).getName());
+        }
+        CategoryEntity categoryEntity = categoryRepository.findCategoryEntityByName(transferData.getCategory())
+                .orElseThrow(() -> new CategoryNotFoundException("Category was not found"));
 
+        // validate sum and cards
         Long initialSum = transferData.getSum();
         validateAll(senderCardEntity, receiverCardEntity, initialSum);
 
         // defining card currencies
-        CurrencyEntity senderCardCurrency = currencyRepository.findByCurrencyName(senderCardEntity.getCurrencyName()).get();
-        CurrencyEntity receiverCardCurrency = currencyRepository.findByCurrencyName(receiverCardEntity.getCurrencyName()).get();
+        CurrencyEntity senderCardCurrency = currencyRepository.findByCurrencyName(senderCardEntity.getCurrencyName()).orElseThrow();
+        CurrencyEntity receiverCardCurrency = currencyRepository.findByCurrencyName(receiverCardEntity.getCurrencyName()).orElseThrow();
 
         // converting sender`s transactionSum to receiver`s currency
         BigDecimal convertedSum = convertTransactionalSum(senderCardCurrency, receiverCardCurrency, initialSum);
@@ -71,6 +82,11 @@ public class CardServiceImpl implements CardService {
         senderCardEntity.setSum(senderCardEntity.getSum().subtract(BigDecimal.valueOf(initialSum)));
         receiverCardEntity.setSum(receiverCardEntity.getSum().add(convertedSum));
 
+        // set transaction category
+
+
+        log.info("Category: {}", categoryEntity);
+
         // creating transaction
         TransactionEntity transaction = new TransactionEntity(
                 senderCardEntity.getCardNumber(),
@@ -78,7 +94,8 @@ public class CardServiceImpl implements CardService {
                 transferData.getPurpose(),
                 ZonedDateTime.now(),
                 transferData.getSum(),
-                convertedSum
+                convertedSum,
+                categoryEntity
         );
 
         // saving all
@@ -110,7 +127,7 @@ public class CardServiceImpl implements CardService {
         return transactionalSum;
     }
 
-    public CardEntity createCard(String providerName, CustomerEntity customer, String typeName, String currency){
+    public CardEntity createCard(String providerName, CustomerEntity customer, String typeName, String currency) {
         CardGenerator cardGenerator = new CardGenerator();
         CardTypeEntity type = cardTypeRepository.findCardTypeEntitiesByName(typeName);
         long count = cardRepository.count();
@@ -120,20 +137,20 @@ public class CardServiceImpl implements CardService {
         return card;
     }
 
-    public List<CardEntity> getAllCards(long ownerId){
+    public List<CardEntity> getAllCards(long ownerId) {
         return cardRepository.findCardEntitiesByOwnerId(ownerId);
     }
 
-    public Optional<CardEntity> getCard(String number){
+    public Optional<CardEntity> getCard(String number) {
         return cardRepository.findByCardNumber(number);
     }
 
-    public Map<String,String> changePin(String number, long ownerId){
+    public Map<String, String> changePin(String number, long ownerId) {
         Optional<CardEntity> card = getCard(number);
-        if(card.isEmpty())
-            return Map.of("error","Card not found");
-        if(ownerId != card.get().getOwner().getId())
-            return Map.of("error","Wrong owner");
+        if (card.isEmpty())
+            return Map.of("error", "Card not found");
+        if (ownerId != card.get().getOwner().getId())
+            return Map.of("error", "Wrong owner");
         CardGenerator cardGenerator = new CardGenerator();
         String pin = cardGenerator.generatePin();
         card.get().setPinCode(pin);
