@@ -13,7 +13,7 @@ This project was created for the Mobile Banking App.
 
 <details>
 
-**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/register`
+**Path:** `http://localhost:8080/register`
 
 **Method:** Post
 
@@ -127,7 +127,7 @@ This project was created for the Mobile Banking App.
 
 <details>
 
-**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/login`
+**Path:** `http://localhost:8080/login`
 
 **Method:** Post
 
@@ -190,7 +190,7 @@ return "error": "Bad ipn"
 ---
 
 ## Refresh Token
-**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/refresh_token`
+**Path:** `http://localhost:8080/refresh_token`
 
 **Method:** Post
 
@@ -228,7 +228,7 @@ return "error": "Bad ipn"
 
 <details>
 
-**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/refresh_token/logout`
+**Path:** `http://localhost:8080/refresh_token/logout`
 
 **Method:** Post
 
@@ -257,7 +257,7 @@ return "error": "Bad ipn"
 
 **Method:** Get
 
-**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/info`
+**Path:** `http://localhost:8080/user/info`
 
 **Headers**
 
@@ -280,7 +280,7 @@ return "error": "Bad ipn"
 
 **Method:** Get
 
-**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/cards/`
+**Path:** `http://localhost:8080/user/cards/`
 
 **Headers**
 
@@ -343,7 +343,7 @@ return "error": "Bad ipn"
 
 **Method:** Get
 
-**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/cards/{cardNumber}`
+**Path:** `http://localhost:8080/user/cards/{cardNumber}`
 
 **Headers**
 
@@ -384,7 +384,7 @@ return "error": "Bad ipn"
 
 <details>
 
-**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/cards/new`
+**Path:** `http://localhost:8080/user/cards/new`
 
 **Method:** Post
 
@@ -427,7 +427,7 @@ return "error": "Bad ipn"
 
 **Method:** Get
 
-**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/cards/change/pin/{cardNumber}`
+**Path:** `http://localhost:8080/user/cards/change/pin/{cardNumber}`
 
 **Headers**
 
@@ -459,7 +459,7 @@ return "error": "Bad ipn"
 
 <details>
 
-**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/transactions/new`
+**Path:** `http://localhost:8080/user/transactions/new`
 
 **Method:** Post
 
@@ -479,6 +479,17 @@ return "error": "Bad ipn"
     "receiverName": "Igor",
     "sum": 150,
     "purpose": "sending 150$"
+}
+```
+
+```json
+{
+    "senderCardNumber": "5168324249821302",
+    "receiverCardNumber": "5168758323722993",
+    "receiverName": "ATB",
+    "sum": 50,
+    "category": "Food",
+    "purpose": "$50 worth of food"
 }
 ```
 
@@ -520,6 +531,11 @@ return "error": "Bad ipn"
 }
 ```
 
+```json
+{
+    "error": "Category was not found"
+}
+```
 </details>
 
 
@@ -527,7 +543,7 @@ return "error": "Bad ipn"
 
 <details>
 
-**Path:** `http://sbbankingapp-env.eba-3teik5g7.eu-central-1.elasticbeanstalk.com/user/transactions/all`
+**Path:** `http://localhost:8080/user/transactions/all`
 
 **Method:** Get
 
@@ -558,6 +574,109 @@ return "error": "Bad ipn"
         "sum": 35,
         "profit": false
     }
+]
+```
+</details>
+
+## Expenditure statistics
+
+<details>
+
+**Path:** `http://localhost:8080/user/transactions/summaries`
+
+**Method:** Get
+
+**Headers**
+
+    Key: Authorization
+    Value: Bearer eyJ0eXAiOiJ141QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU9ySXBuIjoiNTI5MTgwNzMxMSIsInN1YiI6Ik1CQSIsImlzcyI6Ik1CQV9Jc3N1ZXIiLCJleHAiOjE2NjY1MjkzNzQsI4lhdCI6MTY2NjUyNTc3NH0.NkgoKCYJrJXXT23MH0SFeHBTsUJsBOl2DENSY_NRc94
+
+**Format:** JSON
+
+**Response body example:**
+
+```json
+[
+  {
+    "year": 2021,
+    "month": "December",
+    "sum": 50,
+    "currency": "EUR",
+    "categories": [
+      {
+        "category": "Other",
+        "totalSpendPerMonth": 50,
+        "currency": "EUR",
+        "totalSum": 50
+      }
+    ]
+  },
+  {
+    "year": 2021,
+    "month": "November",
+    "sum": 243,
+    "currency": "EUR",
+    "categories": [
+      {
+        "category": "Other",
+        "totalSpendPerMonth": 183,
+        "currency": "EUR",
+        "totalSum": 243
+      },
+      {
+        "category": "Food",
+        "totalSpendPerMonth": 60,
+        "currency": "EUR",
+        "totalSum": 243
+      }
+    ]
+  },
+  {
+    "year": 2022,
+    "month": "December",
+    "sum": 750,
+    "currency": "EUR",
+    "categories": [
+      {
+        "category": "Other",
+        "totalSpendPerMonth": 120,
+        "currency": "EUR",
+        "totalSum": 750
+      },
+      {
+        "category": "Food",
+        "totalSpendPerMonth": 630,
+        "currency": "EUR",
+        "totalSum": 750
+      }
+    ]
+  },
+  {
+    "year": 2022,
+    "month": "November",
+    "sum": 60,
+    "currency": "EUR",
+    "categories": [
+      {
+        "category": "Other",
+        "totalSpendPerMonth": 10,
+        "currency": "EUR",
+        "totalSum": 60
+      },
+      {
+        "category": "Food",
+        "totalSpendPerMonth": 30,
+        "currency": "EUR",
+        "totalSum": 60
+      },
+      {
+        "category": "Fuel",
+        "totalSpendPerMonth": 20,
+        "currency": "EUR",
+        "totalSum": 60
+      }
+    ]
+  }
 ]
 ```
 </details>
