@@ -17,14 +17,18 @@ public class RecentTransactionInfo implements Comparable<RecentTransactionInfo> 
     private final String currency;
     private final ZonedDateTime time;
     private final BigDecimal sum;
+    private final String purpose;
+    private final String category;
     private final boolean profit;
 
-    private RecentTransactionInfo(long id, String provider, String currency, ZonedDateTime time, BigDecimal sum, boolean profit) {
+    private RecentTransactionInfo(long id, String provider, String currency, ZonedDateTime time, BigDecimal sum, String purpose, String category, boolean profit) {
         this.id = id;
         this.provider = provider;
         this.currency = currency;
         this.time = time;
         this.sum = sum;
+        this.purpose = purpose;
+        this.category = category;
         this.profit = profit;
     }
 
@@ -36,6 +40,8 @@ public class RecentTransactionInfo implements Comparable<RecentTransactionInfo> 
                 card.getCurrencyName(),
                 transaction.getTime(),
                 transaction.getSenderCardNumber().equals(card.getCardNumber()) ? BigDecimal.valueOf(transaction.getSum()) : transaction.getConvertedSum(),
+                transaction.getPurpose(),
+                transaction.getCategory().getName(),
                 card.getCardNumber().equals(transaction.getReceiverCardNumber())
         );
     }

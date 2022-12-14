@@ -1,8 +1,7 @@
 package com.ipz.mba.controllers;
 
 import com.ipz.mba.entities.CustomerEntity;
-import com.ipz.mba.models.RecentTransactionInfo;
-import com.ipz.mba.models.TransferRequestData;
+import com.ipz.mba.models.*;
 import com.ipz.mba.security.models.CustomerDetails;
 import com.ipz.mba.services.CardService;
 import com.ipz.mba.services.TransactionService;
@@ -59,6 +58,15 @@ public class TransactionsController {
         CustomerEntity customer = ((CustomerDetails) auth.getPrincipal()).getCustomer();
 
         return transactionService.getAllUserTransactions(customer);
+    }
+
+    @GetMapping("/summaries")
+    public List<RecentSummaryInfo> getSummaries() {
+        log.info("TransactionsController: getSummaries()");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomerEntity customer = ((CustomerDetails) auth.getPrincipal()).getCustomer();
+
+        return transactionService.getUserSummariesTransactions(customer);
     }
 
 }
