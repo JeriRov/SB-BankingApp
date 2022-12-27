@@ -1,7 +1,10 @@
 package com.ipz.mba.controllers;
 
 import com.ipz.mba.entities.CustomerEntity;
-import com.ipz.mba.models.*;
+import com.ipz.mba.exceptions.TransactionFailedException;
+import com.ipz.mba.models.RecentSummaryInfo;
+import com.ipz.mba.models.RecentTransactionInfo;
+import com.ipz.mba.models.TransferRequestData;
 import com.ipz.mba.security.models.CustomerDetails;
 import com.ipz.mba.services.CardService;
 import com.ipz.mba.services.TransactionService;
@@ -39,7 +42,7 @@ public class TransactionsController {
         try {
             log.info(data.toString());
             if (!TransferRequestData.isValid(data)) {
-                throw new Exception("Transactions data is not valid");
+                throw new TransactionFailedException("Transactions data is not valid");
             }
             cardService.performTransaction(customer, data);
 
@@ -68,5 +71,4 @@ public class TransactionsController {
 
         return transactionService.getUserSummariesTransactions(customer);
     }
-
 }

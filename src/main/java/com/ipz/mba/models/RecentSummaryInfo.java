@@ -12,11 +12,11 @@ import java.util.List;
 public class RecentSummaryInfo {
     private int year;
     private String month;
-    private long sum;
+    private Long sum;
     private String currency;
     private List<CategorySummary> categories;
 
-    public RecentSummaryInfo(int year, String month, long sum, String currency) {
+    public RecentSummaryInfo(int year, String month, Long sum, String currency) {
         this.year = year;
         this.month = month;
         this.sum = sum;

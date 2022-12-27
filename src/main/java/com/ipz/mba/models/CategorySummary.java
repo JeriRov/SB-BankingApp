@@ -10,11 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 public class CategorySummary {
     private String category;
-    private long totalSpendPerMonth;
+    private Long totalSpendPerMonth;
     private String currency;
-    private long totalSum;
+    private Long totalSum;
 
-    public CategorySummary(CategoryEntity category, long totalSpendPerMonth) {
+    public CategorySummary(CategoryEntity category, Long totalSpendPerMonth) {
         this.category = category.getName();
         this.totalSpendPerMonth = totalSpendPerMonth;
     }
