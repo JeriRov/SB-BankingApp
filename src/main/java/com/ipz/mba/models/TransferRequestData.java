@@ -18,7 +18,8 @@ public class TransferRequestData {
     public static boolean isValid(TransferRequestData data) {
         return !(data.getSenderCardNumber() == null || data.getSenderCardNumber().isBlank() ||
                 data.getReceiverCardNumber() == null || data.getReceiverCardNumber().isBlank() ||
+                data.getSenderCardNumber().equals(data.getReceiverCardNumber()) ||
                 data.getReceiverName() == null || data.getReceiverName().isBlank() ||
-                data.getSum() == null || data.getSum() <= 0 || data.getPurpose() == null);
+                data.getSum() == null || data.getSum() <= 0 || data.getPurpose() == null );
     }
 }
