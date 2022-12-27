@@ -1,8 +1,13 @@
 package com.ipz.mba.models;
 
 import com.ipz.mba.entities.CardEntity;
+import com.ipz.mba.entities.CurrencyEntity;
+import com.ipz.mba.entities.CustomerEntity;
 import com.ipz.mba.entities.TransactionEntity;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
@@ -11,39 +16,42 @@ import java.util.Objects;
 
 @Slf4j
 @Getter
+@Setter
+@NoArgsConstructor
+@ToString
 public class RecentTransactionInfo implements Comparable<RecentTransactionInfo> {
-    private final long id;
-    private final String provider;
-    private final String currency;
-    private final ZonedDateTime time;
-    private final BigDecimal sum;
-    private final String purpose;
-    private final String category;
-    private final boolean profit;
+    protected long id;
+    protected String provider;
+    protected String currency;
+    protected ZonedDateTime time;
+    protected BigDecimal sum;
+    protected String purpose;
+    protected String category;
+    protected boolean profit;
+    private String senderCardNumber;
+    private String receiverCardNumber;
+    private String senderName;
+    private String receiverName;
 
-    private RecentTransactionInfo(long id, String provider, String currency, ZonedDateTime time, BigDecimal sum, String purpose, String category, boolean profit) {
-        this.id = id;
-        this.provider = provider;
-        this.currency = currency;
-        this.time = time;
-        this.sum = sum;
-        this.purpose = purpose;
-        this.category = category;
-        this.profit = profit;
-    }
+    public RecentTransactionInfo(CardEntity card, TransactionEntity transaction) {
+        log.info("my card: {} | receiver card: {}", card.getCardNumber(), transaction.getReceiverCard().getCardNumber());
+        this.id = transaction.getId();
+        this.provider = card.getProviderEntity().getProviderName();
+        this.currency = card.getCurrencyName();
+        this.time = transaction.getTime();
+        this.sum = transaction.getSenderCard().getCardNumber().equals(card.getCardNumber()) ?
+                BigDecimal.valueOf(transaction.getSum()) : transaction.getConvertedSum();
+        this.purpose = transaction.getPurpose();
+        this.category = transaction.getCategory().getName();
+        this.profit = card.getCardNumber().equals(transaction.getReceiverCard().getCardNumber());
 
-    public static RecentTransactionInfo get(CardEntity card, TransactionEntity transaction) {
-        log.info("my card: {} | receiver card: {}", card.getCardNumber(), transaction.getReceiverCardNumber());
-        return new RecentTransactionInfo(
-                transaction.getId(),
-                card.getProviderEntity().getProviderName(),
-                card.getCurrencyName(),
-                transaction.getTime(),
-                transaction.getSenderCardNumber().equals(card.getCardNumber()) ? BigDecimal.valueOf(transaction.getSum()) : transaction.getConvertedSum(),
-                transaction.getPurpose(),
-                transaction.getCategory().getName(),
-                card.getCardNumber().equals(transaction.getReceiverCardNumber())
-        );
+        this.senderCardNumber = transaction.getSenderCard().getCardNumber();
+        this.receiverCardNumber = transaction.getReceiverCard().getCardNumber();
+
+        CustomerEntity sender = transaction.getSenderCard().getOwner();
+        CustomerEntity receiver = transaction.getReceiverCard().getOwner();
+        this.senderName = sender.getFirstName() + " " + sender.getLastName();
+        this.receiverName = receiver.getFirstName() + " " + receiver.getLastName();
     }
 
     @Override
