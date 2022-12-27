@@ -89,8 +89,8 @@ public class CardServiceImpl implements CardService {
 
         // creating transaction
         TransactionEntity transaction = new TransactionEntity(
-                senderCardEntity.getCardNumber(),
-                receiverCardEntity.getCardNumber(),
+                senderCardEntity,
+                receiverCardEntity,
                 transferData.getPurpose(),
                 ZonedDateTime.now(),
                 transferData.getSum(),

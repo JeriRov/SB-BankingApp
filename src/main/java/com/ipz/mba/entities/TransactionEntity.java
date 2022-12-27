@@ -18,11 +18,12 @@ public class TransactionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "sender_card_number")
-    private String senderCardNumber;
-
-    @Column(name = "receiver_card_number")
-    private String receiverCardNumber;
+    @ManyToOne
+    @JoinColumn(name = "sender_card_number")
+    private CardEntity senderCard;
+    @ManyToOne
+    @JoinColumn(name = "receiver_card_number")
+    private CardEntity receiverCard;
 
     @Column(name = "purpose")
     private String purpose;
@@ -40,9 +41,9 @@ public class TransactionEntity {
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
-    public TransactionEntity(String senderCardNumber, String receiverCardNumber, String purpose, ZonedDateTime time, Long sum, BigDecimal convertedSum, CategoryEntity category) {
-        this.senderCardNumber = senderCardNumber;
-        this.receiverCardNumber = receiverCardNumber;
+    public TransactionEntity(CardEntity senderCardNumber, CardEntity receiverCardNumber, String purpose, ZonedDateTime time, Long sum, BigDecimal convertedSum, CategoryEntity category) {
+        this.senderCard = senderCardNumber;
+        this.receiverCard = receiverCardNumber;
         this.purpose = purpose;
         this.time = time;
         this.sum = sum;
